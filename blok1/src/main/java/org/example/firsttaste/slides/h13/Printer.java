@@ -1,5 +1,6 @@
 package org.example.firsttaste.slides.h13;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Printer {
@@ -38,6 +39,17 @@ public class Printer {
         for (Object o : list) { // items are Objects
             System.out.println(o.toString());
         }
+
+    }
+
+    // Practical examples of using bounds:
+    public <T extends Number> void copy(List<T> src, List<? super T> dest) {
+        // ...
+    }
+
+    public static <T> void sort(List<? extends T> list, Comparator<? super T> comparator) {
+        // sorting....
     }
 
 }
+
