@@ -1,47 +1,33 @@
 package org.example.firsttaste.slides.h7.bank;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Bank implements Iterable<BankAccount> {
 
-    private List<BankAccount> accounts = new ArrayList<>();
+    private AccountManager accountManager = new AccountManager();
     private long id = 10L;
     private String name;
-
-    public Bank() {
-
-    }
 
     public Bank(String eenName) {
         this.name = eenName;
     }
 
-    public BankAccount search(long nr) throws AccountNotFoundException {
-        for (BankAccount account : accounts) {
-            if (account.getAccountNumber() == nr) {
-                return account;
-            }
-        }
-
-        throw new AccountNotFoundException("Account met nummer " + nr + " is niet gevonden!");
+    public BankAccount search(long nr) {
+        return accountManager.search(nr);
     }
 
     public void addAccount(BankAccount a) {
-        this.accounts.add(a);
+        accountManager.addAccount(a);
     }
 
     public void transfer(BankAccount from, BankAccount to, int amount) {
-        if (from.withdraw(amount) > 0) {
-            to.deposit(amount);
-        }
+        accountManager.transfer(from, to, amount);
     }
 
     public String accountsToString() {
         StringBuilder sb = new StringBuilder();
 
-        for (BankAccount account : accounts) {
+        for (BankAccount account : accountManager.getAccounts()) {
             sb.append(account).append("\n");
         }
         sb.append("Total is: ");
@@ -54,7 +40,7 @@ public class Bank implements Iterable<BankAccount> {
 
     public long getTotal() {
         long total = 0;
-        for (BankAccount account : accounts) {
+        for (BankAccount account : accountManager.getAccounts()) {
             total += account.getBalance();
         }
         return total;
@@ -67,11 +53,7 @@ public class Bank implements Iterable<BankAccount> {
 
             @Override
             public boolean hasNext() {
-                if (index < accounts.size()) {
-                    return true;
-                }
-
-                return false;
+                return index < accountManager.getAccounts().size();
             }
 
             @Override
@@ -80,7 +62,7 @@ public class Bank implements Iterable<BankAccount> {
                 // index++;
                 // return bankAccount;
 
-                return accounts.get(index++);
+                return accountManager.getAccounts().get(index++);
             }
         };
     }
