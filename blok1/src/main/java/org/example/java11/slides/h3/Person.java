@@ -61,6 +61,16 @@ public class Person implements Comparable<Robot> { // superclass
         return 0;
     }
 
-    // ...
+    public Person plus(String name, int age) {
+        this.name += name;
+        this.age += age;
+        return this;
+    }
 
+    @Override public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
