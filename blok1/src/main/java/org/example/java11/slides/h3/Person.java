@@ -22,6 +22,10 @@ public class Person implements Comparable<Robot> { // superclass
         this.name = name;
     }
 
+    public Person(Integer age) {
+        this.age = age;
+    }
+
     // methodes  // BEHAVIOUR
 
     public void setAge(int nieuweLeeftijd) {
