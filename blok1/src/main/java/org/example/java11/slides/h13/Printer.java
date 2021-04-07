@@ -10,22 +10,35 @@ public class Printer {
         System.out.println(t);
     }
 
+    public <T> void print(List<T> list) { // list is read (object) only
+        // list.add(1.0d); // NOT allowed, since you never know what T can be, it can be anything
+        for (Object t : list) { // can be anything, so object
+            System.out.println(t);
+        }
+    }
+
+    // invariant
+    public void printNumbers(List<Number> list) { // list is read and write
+        list.add(1.0d); // allowed, since Double is a subtype of Number
+        System.out.println(list);
+    }
+
     // Co and contravariant: -----------------------------------
     // Producer Extends, Consumer Super (PECS)
 
     // Extends = producer = read only, no write.
     // type parameter declaratie, must "be a" number
-    public <T extends Number> void printCo(List<T> list) {
+    public <N extends Number> void printCo(List<N> list) { // list is read (Number) only
         // list.add(1); // adding not allowed when T extends ...
-        T t = list.get(0);
-        for (T item : list) {
+        N n = list.get(0);
+        for (N item : list) {
             System.out.println(item.intValue());
         }
     }
 
     // Super = consumer = write (and read).
     // ? must be number or object, so allowed args are: List<Object> and List<Number>
-    public void printContra(List<? super Number> list) {
+    public void printContra(List<? super Number> list) { // list is writable
         // all numbers are allowed:
         list.add(1);
         list.add(1D);

@@ -8,7 +8,7 @@ public class Person implements Comparable<Robot> { // superclass
 
     // in this:
     protected String name; // STATE
-    private int age;
+    private Integer age = 0;
 
     // access modifiers: public, protected, "" (=package-private), private
 
@@ -42,8 +42,11 @@ public class Person implements Comparable<Robot> { // superclass
         return this.age;
     }
 
-    public void haveBirthday() {
-        age++;
+    public synchronized void haveBirthday() {
+        int temp = age;
+        Thread.yield();
+        temp = age + 1;
+        age = temp;
     }
 
     public void haveBirthday(int i) {

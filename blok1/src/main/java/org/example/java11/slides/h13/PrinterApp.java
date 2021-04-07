@@ -35,10 +35,14 @@ public class PrinterApp {
         p.print(42);
         p.print("42");
 
-        // covariant: all subtypes of Number and Number itself can be used as T in List<T>, so
+        p.print(numberList);
+        p.print(longList);
+
+        // covariant: all subtypes of Number and Number itself allowed as T in List<T>, so
         // - List<Integer>,
         // - List<Long>,
         // - ...
+        //                  = preserved subtyping relation
         p.printCo(numberList);
         p.printCo(longList);
         p.printCo(integerList);
@@ -47,8 +51,14 @@ public class PrinterApp {
         // contravariant: only supertypes of Number and Number itself can be passed as T in List<T>, so only
         // - List<Number> and
         // - List<Object>
+        //                  = reserved subtyping relation
         p.printContra(objectList);
         p.printContra(numberList);
+
+        // invariant: you have to pass the exact type, List<Number> in this case, no subtypes allowed.
+        p.printNumbers(numberList);
+        // p.printNumbers(longList); // not allowed: would result in longList.add(1.0d) inside printNumbers
+
     }
 
 }
