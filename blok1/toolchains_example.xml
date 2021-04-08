@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF8"?>
+<!-- 1) Put this file in your maven home, i.e. ~/.m2/toolchains.xml -->
+<!-- 2) Set the jdkHomes below to the correct locations. -->
+<!-- 3) Enable the maven-toolchains-plugin in your pom and choose the right jdk there. -->
+<!-- 4) Set the maven.compiler.release property in your pom accordingly . -->
+<toolchains>
+    <toolchain>
+        <type>jdk</type>
+        <provides>
+            <version>11</version>
+        </provides>
+        <configuration>
+            <jdkHome>C:\Program Files\Java\jdk-11.0.2</jdkHome>
+        </configuration>
+    </toolchain>
+    <toolchain>
+        <type>jdk</type>
+        <provides>
+            <version>15</version>
+        </provides>
+        <configuration>
+            <jdkHome>C:\Program Files\Java\corretto-15.0.1</jdkHome>
+        </configuration>
+    </toolchain>
+    <toolchain>
+        <type>jdk</type>
+        <provides>
+            <version>16</version>
+        </provides>
+        <configuration>
+            <jdkHome>C:\Program Files\Java\jdk-16.0.0.36-hotspot</jdkHome>
+        </configuration>
+    </toolchain>
+</toolchains>

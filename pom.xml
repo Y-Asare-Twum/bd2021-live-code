@@ -16,8 +16,6 @@
 
     <properties>
         <junit.version>4.13.2</junit.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.release>11</maven.compiler.release>
     </properties>
 
@@ -107,10 +105,34 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <!-- <configuration>
-                     <compilerArgs>&#45;&#45;enable-preview</compilerArgs>
-                 </configuration>-->
+                <configuration>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
             </plugin>
+
+            <!-- See toolchains_example.xml! -->
+
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <toolchains>
+                        &lt;!&ndash; this project needs a JDK toolchain, version ... &ndash;&gt;
+                        <jdk>
+                            <version>11</version>
+                        </jdk>
+                    </toolchains>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>toolchain</goal>
+                        </goals>
+                        &lt;!&ndash; the toolchain goal binds to the validate phase automatically &ndash;&gt;
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
 
