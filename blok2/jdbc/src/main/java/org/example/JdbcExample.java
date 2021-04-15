@@ -1,25 +1,30 @@
 package org.example;
 
 import java.sql.*;
-import java.util.function.Consumer;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.example.Transaction.execute;
 
 public class JdbcExample {
 
     private static final String URL = "jdbc:mysql://localhost:3306/jdbcdemo?serverTimezone=UTC";
     public static final String USER = "root";
     public static final String PASSWORD = "root";
+    public static final PersonDao personDao = PersonDao.instance();
 
     public static void main(String[] args) {
         JdbcExample jdbcExample = new JdbcExample();
-        try {
-            jdbcExample.jdbcBasic();
-            jdbcExample.jdbcMore("David");
-            jdbcExample.jdbcPreparedStatement("David'; DROP TABLE PERSON --"); // SQL injection
-            jdbcExample.jdbcTransactionMonad("Bart");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
+        // try {
+        //     jdbcExample.jdbcBasic();
+        //     jdbcExample.jdbcMore("David");
+        //     jdbcExample.jdbcPreparedStatement("David'; DROP TABLE PERSON --"); // SQL injection
+        //     jdbcExample.jdbcTransactionMonad("Bart");
+        // } catch (SQLException throwables) {
+        //     throwables.printStackTrace();
+        // }
+        jdbcExample.findOnDao();
+        jdbcExample.save(Person.builder().name("Abraham").age(50).build());
     }
 
     private void jdbcBasic() throws SQLException {
@@ -31,7 +36,7 @@ public class JdbcExample {
         // https://stackoverflow.com/questions/28220724/class-fornamejdbc-driver-no-longer-needed
 
         // 2
-        Connection connection = DriverManager.getConnection(URL, USER, USER);
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
         //                                                       http        ://host      :port/<path>
         // 3
         Statement statement = connection.createStatement();
@@ -39,6 +44,7 @@ public class JdbcExample {
         // 4
         ResultSet result = statement.executeQuery("SELECT * FROM PERSON");
 
+        List<Person> persons = new LinkedList<>();
         // 5
         while (result.next()) {
             String n = result.getString("name");
@@ -51,7 +57,7 @@ public class JdbcExample {
                             .age(a)
                             .build();
 
-            System.out.println(p);
+            persons.add(p);
         }
 
         // 6
@@ -87,7 +93,8 @@ public class JdbcExample {
     }
 
     /**
-     * Protects against SQL injection AND performs better than normal Statement.
+     * 1) Protects against SQL injection AND
+     * 2) performs better than normal Statement.
      *
      * @param arg
      * @throws SQLException
@@ -124,7 +131,7 @@ public class JdbcExample {
     }
 
     private void jdbcTransactionMonad(String arg) {
-        executeTransaction(connection -> {
+        execute(connection -> {
             try {
                 Statement statement = connection.createStatement();
 
@@ -143,32 +150,15 @@ public class JdbcExample {
         });
     }
 
-    private void executeTransaction(Consumer<Connection> c) {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            connection.setAutoCommit(false);
+    private void findOnDao() {
+        List<Person> people = personDao.findAll();
+        people.forEach(System.out::println);
 
-            c.accept(connection);
-
-            connection.commit();
-        } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-        }
+        Person p = personDao.find(1);
+        System.out.println(p);
     }
+
+    private void save(Person p) {
+    }
+
 }

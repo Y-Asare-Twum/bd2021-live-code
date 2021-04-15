@@ -3,8 +3,7 @@ package org.example;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
-@Builder
+@Data @Builder
 public class Person {
     private long id;
     private String name;
