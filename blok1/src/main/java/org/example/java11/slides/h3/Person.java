@@ -2,7 +2,11 @@ package org.example.java11.slides.h3;
 
 import org.example.java11.slides.h10.game.Robot;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Person implements Comparable<Robot> { // superclass
+
+    private final ReentrantLock lock = new ReentrantLock();
 
     // public, protected, - (package private), private.
 
@@ -46,11 +50,13 @@ public class Person implements Comparable<Robot> { // superclass
         return this.age;
     }
 
-    public synchronized void haveBirthday() {
+    public void haveBirthday() {
+        lock.lock();
         int temp = age;
-        Thread.yield();
+        // Thread.yield(); // sta je beurt af
         temp = age + 1;
         age = temp;
+        lock.unlock();
     }
 
     public void haveBirthday(int i) {

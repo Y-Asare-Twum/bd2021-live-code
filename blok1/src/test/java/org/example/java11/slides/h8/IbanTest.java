@@ -1,5 +1,6 @@
 package org.example.java11.slides.h8;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,7 @@ class IbanTest {
     }
 
     @Test
+    @Disabled
     void whenTwoIbansAreCreatedThenOnlyOneCanBeAddedInASet() {
         Iban vanBram1 = Iban.of("NL89", "RABO0", "315044462");
         Iban vanBram2 = Iban.of("DE89", "RABO0", "315044462");

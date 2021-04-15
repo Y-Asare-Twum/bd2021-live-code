@@ -49,10 +49,10 @@ public class TryWithResources /*extends Object*/ {
     private void process(BufferedReader streamOfText) throws IOException {
         StringJoiner total = new StringJoiner(" | ");
 
-        String line = streamOfText.readLine();
-        while (line != null) {
+        String line;
+        while ((line = streamOfText.readLine()) != null) {
             total.add(line);
-            line = streamOfText.readLine();
+            // line = streamOfText.readLine();
         }
 
         System.out.println(total.toString());
