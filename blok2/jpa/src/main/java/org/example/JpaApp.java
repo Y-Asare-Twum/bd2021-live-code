@@ -12,7 +12,8 @@ public class JpaApp {
         Person person = personDao.find(1);
         System.out.println(person);
 
-        personDao.save(new Person("Piet", 42));
+        Person piet = Person.builder().name("Piet").age(42).build();
+        personDao.save(piet);
 
     }
 }
