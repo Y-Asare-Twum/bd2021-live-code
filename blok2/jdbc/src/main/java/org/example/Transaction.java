@@ -6,13 +6,15 @@ import java.sql.SQLException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static org.example.util.DatabaseProps.get;
+
 public class Transaction {
 
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
-    private static final String URL = "jdbc:mysql://localhost:3306/jdbcdemo?serverTimezone=UTC";
+    private static final String USER = get("user");
+    private static final String PASSWORD = get("password");
+    private static final String URL = get("url");
 
-    public static <T> T execute(Function<Connection, T> jdbcCode) {
+    public static <T> T executeTransaction(Function<Connection, T> jdbcCode) {
         Connection c = null;
         try {
             c = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -44,8 +46,8 @@ public class Transaction {
         return null;
     }
 
-    public static void execute(Consumer<Connection> jdbcCode) {
-        execute(c -> {jdbcCode.accept(c); return 1;});
+    public static void executeTransaction(Consumer<Connection> jdbcCode) {
+        executeTransaction(c -> {jdbcCode.accept(c); return 1;});
     }
 
 }

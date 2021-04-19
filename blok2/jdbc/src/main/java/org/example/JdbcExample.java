@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.example.Transaction.execute;
+import static org.example.Transaction.executeTransaction;
 
 public class JdbcExample {
 
@@ -23,8 +23,10 @@ public class JdbcExample {
         // } catch (SQLException throwables) {
         //     throwables.printStackTrace();
         // }
-        jdbcExample.findOnDao();
-        jdbcExample.save(Person.builder().name("Abraham").age(50).build());
+        // jdbcExample.findOnDao();
+        if (!jdbcExample.save(Person.builder().name("Abraham").age(50).build())) {
+            System.out.println("Save failed...");
+        }
     }
 
     private void jdbcBasic() throws SQLException {
@@ -130,8 +132,8 @@ public class JdbcExample {
         }
     }
 
-    private void jdbcTransactionMonad(String arg) {
-        execute(connection -> {
+    private void jdbcTransaction(String arg) {
+        executeTransaction(connection -> {
             try {
                 Statement statement = connection.createStatement();
 
@@ -158,8 +160,8 @@ public class JdbcExample {
         System.out.println(p);
     }
 
-    private void save(Person p) {
-        
+    private boolean save(Person p) {
+        return personDao.save(p);
     }
 
 }
