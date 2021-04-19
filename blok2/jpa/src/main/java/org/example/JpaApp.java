@@ -7,7 +7,7 @@ public class JpaApp {
     }
 
     private void start() {
-        PersonDao personDao = new PersonDao();
+        PersonDao personDao = PersonDao.INSTANCE;
 
         Person person = personDao.find(1);
         System.out.println(person);

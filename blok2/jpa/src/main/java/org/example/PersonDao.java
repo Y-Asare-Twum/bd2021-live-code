@@ -4,7 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class PersonDao {
+public enum PersonDao {
+
+    INSTANCE;
 
     public static final EntityManager em =
             Persistence.createEntityManagerFactory("MySQL-jpademo").createEntityManager();
