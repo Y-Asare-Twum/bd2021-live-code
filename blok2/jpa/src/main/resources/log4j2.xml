@@ -27,6 +27,7 @@
         </Logger>-->
 
         <Logger name="org.hibernate" level="INFO"/>
+
         <!--to show binding parameter log statements:-->
         <Logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
 
