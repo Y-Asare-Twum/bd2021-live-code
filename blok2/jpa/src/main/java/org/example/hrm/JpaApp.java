@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 
 public class JpaApp {
 
-    private Logger log = LoggerFactory.getLogger(JpaApp.class);
+    private final Logger log = LoggerFactory.getLogger(JpaApp.class);
 
     public static final EntityManager em =
             Persistence.createEntityManagerFactory("MySQL-pubs").createEntityManager();
@@ -20,7 +20,7 @@ public class JpaApp {
     private void start() {
         PersonDao personDao = PersonDao.instance(em);
 
-        Person person = personDao.find(1);
+        Person person = personDao.find(1L);
         System.out.println(person);
 
         Person p = Person.builder().name("Piet").age(42).build();
@@ -28,7 +28,7 @@ public class JpaApp {
 
         // findAll
         log.debug("all persons:");
-        personDao.findAllNamed().forEach(ps -> log.debug(ps.toString()));
+        personDao.findAll().forEach(ps -> log.debug(ps.toString()));
 
         // updating:
         personDao.updateName(p, "Arie");

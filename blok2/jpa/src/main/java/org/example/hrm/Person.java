@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.Identifiable;
 
 import javax.persistence.*;
 
@@ -15,10 +16,10 @@ import javax.persistence.*;
         @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
         @NamedQuery(name = "Person.find", query = "SELECT p FROM Person p WHERE p.id=:id")
 })
-public class Person {
+public class Person implements Identifiable<Long> {
 
     @Id @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     private int age;
 
