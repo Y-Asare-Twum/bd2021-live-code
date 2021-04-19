@@ -55,8 +55,8 @@ public class PersonDao {
                         .build();
             } catch (SQLException e) {
                 e.printStackTrace();
+                return null;
             }
-            return null;
         });
     }
 
@@ -68,10 +68,10 @@ public class PersonDao {
                 statement.setInt(2, p.getAge());
 
                 return statement.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Boolean.FALSE;
             }
-            return Boolean.FALSE;
         });
     }
 

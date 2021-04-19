@@ -8,17 +8,17 @@ import java.util.function.Function;
 
 public class Transaction {
 
-    public static final String USER = "root";
-    public static final String PASSWORD = "root";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
     private static final String URL = "jdbc:mysql://localhost:3306/jdbcdemo?serverTimezone=UTC";
 
-    public static <T> T execute(Function<Connection, T> f) {
+    public static <T> T execute(Function<Connection, T> jdbcCode) {
         Connection c = null;
         try {
             c = DriverManager.getConnection(URL, USER, PASSWORD);
             c.setAutoCommit(false);
 
-            T apply = f.apply(c);
+            T apply = jdbcCode.apply(c);
 
             c.commit();
 
@@ -44,8 +44,8 @@ public class Transaction {
         return null;
     }
 
-    public static void execute(Consumer<Connection> action) {
-        execute(c -> {action.accept(c); return 1;});
+    public static void execute(Consumer<Connection> jdbcCode) {
+        execute(c -> {jdbcCode.accept(c); return 1;});
     }
 
 }
