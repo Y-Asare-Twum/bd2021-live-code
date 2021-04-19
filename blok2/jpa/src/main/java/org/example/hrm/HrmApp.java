@@ -6,22 +6,22 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-public class JpaApp {
+public class HrmApp {
 
-    private final Logger log = LoggerFactory.getLogger(JpaApp.class);
+    private final Logger log = LoggerFactory.getLogger(HrmApp.class);
 
-    public static final EntityManager em =
+    private final EntityManager em =
             Persistence.createEntityManagerFactory("MySQL-pubs").createEntityManager();
 
     public static void main(String[] args) {
-        new JpaApp().start();
+        new HrmApp().start();
     }
 
     private void start() {
         PersonDao personDao = PersonDao.instance(em);
 
         Person person = personDao.find(1L);
-        System.out.println(person);
+        log.debug(person.toString());
 
         Person p = Person.builder().name("Piet").age(42).build();
         personDao.save(p);

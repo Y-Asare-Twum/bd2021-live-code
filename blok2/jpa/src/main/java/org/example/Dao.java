@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Dao<E extends Identifiable<I>, I> { // E is an entity
 
-    private EntityManager em;
+    protected EntityManager em;
 
     public Dao(EntityManager em) {
         this.em = em;

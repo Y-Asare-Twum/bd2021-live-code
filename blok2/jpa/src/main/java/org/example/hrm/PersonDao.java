@@ -3,12 +3,8 @@ package org.example.hrm;
 import org.example.Dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 
 public class PersonDao extends Dao<Person, Long> {
-
-    public static final EntityManager em =
-            Persistence.createEntityManagerFactory("MySQL-jpademo").createEntityManager();
 
     private static PersonDao instance;
 

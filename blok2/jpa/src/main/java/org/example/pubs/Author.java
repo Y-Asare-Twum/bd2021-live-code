@@ -17,11 +17,11 @@ import javax.persistence.*;
 })
 public class Author implements Identifiable<String> {
 
-    @javax.persistence.Id @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "AU_ID")
     private String id;
 
     @Column(name = "AU_LNAME")
-    private long lastname;
+    private String lastname;
 
 }
