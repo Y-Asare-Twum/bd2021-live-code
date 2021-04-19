@@ -1,11 +1,12 @@
 package org.example;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity // javax: java eXtension
 public class Person {
-    @Id
+    @Id @GeneratedValue
     private long id;
 
     private String name;
@@ -14,8 +15,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(long id, String name, int age) {
-        this.id = id;
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }

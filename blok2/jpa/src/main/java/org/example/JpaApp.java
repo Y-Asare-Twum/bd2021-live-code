@@ -12,7 +12,7 @@ public class JpaApp {
         Person person = personDao.find(1);
         System.out.println(person);
 
-        personDao.save(new Person(2, "Piet", 42));
+        personDao.save(new Person("Piet", 42));
 
     }
 }
