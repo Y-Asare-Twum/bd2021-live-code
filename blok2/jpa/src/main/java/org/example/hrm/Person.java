@@ -10,6 +10,8 @@ import org.example.Identifiable;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.MERGE;
+
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 @Entity
 @NamedQueries({
@@ -23,4 +25,9 @@ public class Person implements Identifiable<Long> {
     private String name;
     private int age;
 
+    @ManyToOne(cascade = MERGE) // On merge cascade
+    private Job job; // FK
+
+    @ManyToOne(cascade = MERGE) // On merge cascade
+    private Team scrumteam; // FK
 }

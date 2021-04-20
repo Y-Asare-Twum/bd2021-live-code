@@ -11,7 +11,7 @@ public class HrmApp {
     private final Logger log = LoggerFactory.getLogger(HrmApp.class);
 
     private final EntityManager em =
-            Persistence.createEntityManagerFactory("MySQL-pubs").createEntityManager();
+            Persistence.createEntityManagerFactory("MySQL-hrm").createEntityManager();
 
     public static void main(String[] args) {
         new HrmApp().start();
@@ -19,12 +19,13 @@ public class HrmApp {
 
     private void start() {
         PersonDao personDao = PersonDao.instance(em);
-
-        Person person = personDao.find(1L);
-        log.debug(person.toString());
+        TeamDao teamDao = TeamDao.instance(em);
 
         Person p = Person.builder().name("Piet").age(42).build();
         personDao.save(p);
+
+        Person person = personDao.find(p.getId());
+        log.debug(person.toString());
 
         // findAll
         log.debug("all persons:");
@@ -41,7 +42,14 @@ public class HrmApp {
         p.setName("Harry");
         Person updatedP = personDao.update(p);
 
-        // remove TODO
-        personDao.remove(p);
+        Job java = Job.builder().title("Javaprogrammeur").build();
+        // jobDao.save(java);
+        p.setJob(java);
+        personDao.update(p);
+
+        teamDao.findAll().forEach(System.out::println);
+
+        // remove
+        // personDao.remove(p);
     }
 }
