@@ -60,4 +60,36 @@ class HrmAppIT {
         Person pietLongName = Person.builder().name("Piet".repeat(100)).age(42).build();
         assertThrows(RuntimeException.class, () -> personDao.save(pietLongName));
     }
+
+    @Test
+    void laptopsLazy() {
+        // Person person = personDao.findByName("Bram").get(0);
+        // person.getLaptops().forEach(System.out::println);
+
+        // log.debug("personDao.findByName(\"Bram\")");
+        // List<Person> people = personDao.findByName("Bram");
+
+        // log.debug("System.out.println(person.toString())");
+        // for (Person person : people) {
+        //     System.out.println(person.toString());
+        // }
+
+        // log.debug("showing laptops:");
+        // people.stream()
+        //         .peek(System.out::println)
+        //         .map(Person::getLaptops)
+        //         .flatMap(Collection::stream)
+        //         .forEach(System.out::println);
+
+        List<Person> allWithDetails = personDao.findAllWithDetails();
+        allWithDetails.forEach(System.out::println);
+
+    }
+
+    @Test
+    void updateBidi() {
+        Person bram = personDao.findByName("Bram").get(0);
+        bram.setScrumteam(teamDao.find(1L));
+        personDao.update(bram);
+    }
 }
