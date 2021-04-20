@@ -1,4 +1,4 @@
-package org.example.hrm;
+package org.example.hrm.domain;
 
 // javax: java eXtension
 

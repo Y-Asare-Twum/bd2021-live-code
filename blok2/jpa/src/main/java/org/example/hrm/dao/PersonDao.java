@@ -1,9 +1,14 @@
-package org.example.hrm;
+package org.example.hrm.dao;
 
+import lombok.extern.log4j.Log4j2;
 import org.example.Dao;
+import org.example.hrm.domain.Person;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
+@Log4j2
 public class PersonDao extends Dao<Person, Long> {
 
     private static PersonDao instance;
@@ -26,6 +31,7 @@ public class PersonDao extends Dao<Person, Long> {
     }
 
     public void updateNameOnDetachedEntity(Person p, String name) {
+        log.debug("updateNameOnDetachedEntity");
         em.getTransaction().begin();
 
         // Person person = find(p.getId());
@@ -36,6 +42,22 @@ public class PersonDao extends Dao<Person, Long> {
         em.merge(p);
 
         em.getTransaction().commit();
+    }
+
+    public List<Person> findByName(String name) {
+        TypedQuery<Person> query = em.createQuery("SELECT p from Person p where p.name=:eenNaam", Person.class);
+        query.setParameter("eenNaam", name);
+        return query.getResultList();
+    }
+
+    public List<Person> findAllWithDetails() {
+        return em.createQuery(
+                "SELECT p " +
+                        "FROM Person p " +
+                        "JOIN p.job " +
+                        "JOIN p.scrumteam " +
+                        "JOIN FETCH p.laptops",
+                Person.class).getResultList();
     }
 
 }

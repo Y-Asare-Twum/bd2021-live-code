@@ -1,17 +1,14 @@
-package org.example.hrm;
+package org.example.hrm.domain;
 
 // javax: java eXtension
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.Identifiable;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
-@Data @Builder @AllArgsConstructor @NoArgsConstructor
+@Data @Builder @AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(exclude = "members")
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Team.findAll", query = "SELECT e FROM Team e"),
@@ -23,6 +20,6 @@ public class Team implements Identifiable<Long> {
     private Long id;
     private String yell;
 
-    @OneToMany(mappedBy = "scrumteam")
-    private Set<Person> members;
+    @OneToMany(mappedBy = "scrumteam", fetch = FetchType.LAZY)
+    private Collection<Person> members;
 }

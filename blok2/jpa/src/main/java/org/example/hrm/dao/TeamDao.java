@@ -1,6 +1,7 @@
-package org.example.hrm;
+package org.example.hrm.dao;
 
 import org.example.Dao;
+import org.example.hrm.domain.Team;
 
 import javax.persistence.EntityManager;
 
