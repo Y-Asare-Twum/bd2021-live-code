@@ -54,8 +54,8 @@ public class PersonDao extends Dao<Person, Long> {
         return em.createQuery(
                 "SELECT p " +
                         "FROM Person p " +
-                        "JOIN p.job " +
-                        "JOIN p.scrumteam " +
+                        "JOIN FETCH p.job " + // JOIN FETCH == EAGER
+                        "JOIN FETCH p.scrumteam " +
                         "JOIN FETCH p.laptops",
                 Person.class).getResultList();
     }

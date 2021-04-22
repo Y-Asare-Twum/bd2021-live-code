@@ -4,29 +4,47 @@ import org.example.hrm.dao.LaptopDao;
 import org.example.hrm.dao.PersonDao;
 import org.example.hrm.dao.TeamDao;
 import org.example.hrm.domain.Job;
+import org.example.hrm.domain.Laptop;
 import org.example.hrm.domain.Person;
+import org.example.hrm.domain.Team;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HrmAppIT {
 
-    private final EntityManager em =
+    public static final EntityManager em =
             Persistence.createEntityManagerFactory("H2-hrm").createEntityManager();
 
-    private final PersonDao personDao = PersonDao.instance(em);
-    private final TeamDao teamDao = TeamDao.instance(em);
-    private final LaptopDao laptopDao = LaptopDao.instance(em);
+    private static final PersonDao personDao = PersonDao.instance(em);
+    private static final TeamDao teamDao = TeamDao.instance(em);
+    private static final LaptopDao laptopDao = LaptopDao.instance(em);
+
+    private static Person p;
+    private static Team scrumteam;
+
+    @BeforeAll
+    static void beforeAll() {
+        p = Person.builder().name("Piet").age(42).build();
+        personDao.save(p);
+        personDao.save(Person.builder().name("Bram").build());
+
+        laptopDao.save(Laptop.builder().brand("A").build());
+        laptopDao.save(Laptop.builder().brand("B").build());
+        laptopDao.save(Laptop.builder().brand("C").build());
+
+        scrumteam = Team.builder().yell("Scrum!").build();
+        teamDao.save(scrumteam);
+    }
 
     @Test
     void persons() {
-        Person p = Person.builder().name("Piet").age(42).build();
-        personDao.save(p);
-
         Person person = personDao.find(p.getId());
 
         // findAll
@@ -81,15 +99,38 @@ class HrmAppIT {
         //         .flatMap(Collection::stream)
         //         .forEach(System.out::println);
 
-        List<Person> allWithDetails = personDao.findAllWithDetails();
-        allWithDetails.forEach(System.out::println);
+        // List<Person> allWithDetails = personDao.findAllWithDetails();
+        // allWithDetails.forEach(System.out::println);
+
+        List<Person> all = personDao.findAll();
+        for (Person person : all) {
+            for (Laptop laptop : person.getLaptops()) {
+                System.out.println(laptop);
+            }
+
+        }
 
     }
 
     @Test
     void updateBidi() {
         Person bram = personDao.findByName("Bram").get(0);
-        bram.setScrumteam(teamDao.find(1L));
+        bram.setScrumteam(scrumteam);
         personDao.update(bram);
+    }
+
+    @Test
+    void cascadePersistOnLaptop() {
+        Person bram = personDao.findByName("Bram").get(0);
+        int size1 = bram.getLaptops().size();
+
+        bram.addLaptop(Laptop.builder().brand("DELL").build());
+        personDao.update(bram);
+
+        bram = personDao.findByName("Bram").get(0);
+        int size2 = bram.getLaptops().size();
+
+        assertThat(size2).isGreaterThan(size1);
+
     }
 }

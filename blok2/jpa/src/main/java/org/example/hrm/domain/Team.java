@@ -7,6 +7,7 @@ import org.example.Identifiable;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(exclude = "members")
 @Entity
@@ -22,4 +23,12 @@ public class Team implements Identifiable<Long> {
 
     @OneToMany(mappedBy = "scrumteam", fetch = FetchType.LAZY)
     private Collection<Person> members;
+
+    public void addMember(Person person) {
+        if (members == null) {
+            members = new HashSet<>();
+        }
+
+        members.add(person);
+    }
 }

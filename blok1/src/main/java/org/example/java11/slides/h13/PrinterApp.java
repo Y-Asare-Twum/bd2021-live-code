@@ -59,6 +59,7 @@ public class PrinterApp {
         p.printNumbers(numberList);
         // p.printNumbers(longList); // not allowed: would result in longList.add(1.0d) inside printNumbers
 
+        p.printNumbers(new Integer[]{0, 1, 2});
     }
 
 }
