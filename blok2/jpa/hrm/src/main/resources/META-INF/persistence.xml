@@ -8,6 +8,8 @@
     <persistence-unit name="MySQL-hrm">
         <!-- onderstaande kan uit: wordt automatisch geladen, omdat hibernate op classpath (in pom) staat. -->
         <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+        <class>org.example.hrm.domain.Person</class>
+        <class>org.example.hrm.domain.Laptop</class>
         <validation-mode>AUTO</validation-mode>
         <properties>
             <!-- onderstaande kan uit: wordt automatisch geladen, omdat mysql op classpath (in pom) staat. -->

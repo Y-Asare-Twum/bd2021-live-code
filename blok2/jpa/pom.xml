@@ -15,6 +15,7 @@
     <modules>
         <module>post</module>
         <module>hrm</module>
+        <module>pubs</module>
     </modules>
 
     <dependencies>
