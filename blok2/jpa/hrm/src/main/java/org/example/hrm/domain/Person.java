@@ -84,7 +84,7 @@ public class Person implements Identifiable<Long> {
     //      collection valued (..ToMany)
 
     @OneToMany(cascade = PERSIST, fetch = LAZY)
-    @Singular
+    @Builder.Default
     private List<Laptop> laptops = new ArrayList<>();
 
     // BiDi, passive config side (passive, since FK is in join table)

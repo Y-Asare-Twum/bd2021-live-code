@@ -1,6 +1,9 @@
 package org.example.post.onetomany.uni;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +19,6 @@ public class Post {
     private String title;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<PostComment> comments = new ArrayList<>();
+    private List<PostComment> comments = new ArrayList<>();
 
 }

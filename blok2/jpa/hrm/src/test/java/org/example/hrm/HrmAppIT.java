@@ -141,4 +141,19 @@ class HrmAppIT {
         assertThat(size2).isGreaterThan(size1);
 
     }
+
+    @Test
+    void addLaptopToPerson() {
+        Person p = Person.builder().name("Bram").build();
+        p.addLaptop(Laptop.builder().brand("XXX").build());
+        personDao.save(p);
+    }
+
+    @Test
+    void addPersonToTeam() {
+        Team t = Team.builder().yell("YYY!").build();
+        Person p = Person.builder().name("Bram").build();
+        t.addMember(p);
+        teamDao.save(t);
+    }
 }
