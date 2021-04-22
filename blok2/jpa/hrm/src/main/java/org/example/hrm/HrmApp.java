@@ -1,39 +1,25 @@
 package org.example.hrm;
 
+import org.example.hrm.boundary.HomeScreen;
 import org.example.hrm.dao.PersonDao;
-import org.example.hrm.domain.Address;
-import org.example.hrm.domain.ContactType;
-import org.example.hrm.domain.Laptop;
-import org.example.hrm.domain.Person;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
+import java.util.Scanner;
 
 import static org.example.Em.em;
 
 public class HrmApp {
 
-    private static final PersonDao personDao = PersonDao.instance(em);
+    public static final PersonDao personDao = PersonDao.instance(em);
 
-    public static void main(String[] args) {
-        // See HrmAppIT
+    private static final Scanner scanner = new Scanner(System.in);
 
-        Person p = Person.builder().name("Jan")
-                .birthDate(LocalDate.of(1979, 8, 22))
-                .birthDateTime(LocalDateTime.of(1979, 8, 22, 6, 10))
-                .creationDate(new Date())
-                .creationTime(LocalTime.now())
-                .hasDriversLicence(true)
-                .type(ContactType.Vip)
-                .address(Address.builder().street("S").housenumber(32).build())
-                .build();
+    public static void main(String[] args) { new HomeScreen().start(); }
 
-        p.addLaptop(Laptop.builder().brand("DELL").build());
+    public static String readLine() { return scanner.nextLine(); }
 
-        personDao.save(p);
-
+    public static String prompt(String message) {
+        System.out.print(message);
+        return scanner.nextLine();
     }
 
 }

@@ -9,6 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Log4j2
 public class PersonDao extends Dao<Person, Long> {
 
@@ -43,6 +45,10 @@ public class PersonDao extends Dao<Person, Long> {
         em.merge(p);
 
         em.getTransaction().commit();
+    }
+
+    public List<Person> findBy(String name) {
+        return isBlank(name) ? findAll() : findByName(name);
     }
 
     public List<Person> findByName(String name) {
