@@ -4,16 +4,14 @@ package org.example.hrm.domain;
 
 import lombok.*;
 import org.example.Identifiable;
-import org.example.hrm.BooleanTFConverter;
+import org.example.hrm.converters.BooleanTFConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
@@ -86,7 +84,8 @@ public class Person implements Identifiable<Long> {
     //      collection valued (..ToMany)
 
     @OneToMany(cascade = PERSIST, fetch = LAZY)
-    private Set<Laptop> laptops = new HashSet<>();
+    @Singular
+    private List<Laptop> laptops = new ArrayList<>();
 
     // BiDi, passive config side (passive, since FK is in join table)
     @ManyToMany(cascade = PERSIST/*, mappedBy = "employees"*/) // either use mappedBy or use JoinTable on either manytomany side (of your choice); it doesn't matter which side

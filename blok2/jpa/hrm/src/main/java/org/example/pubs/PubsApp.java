@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PubsApp {
 
-    private final Logger log = LoggerFactory.getLogger(HrmApp.class);
+    private final Logger log = LoggerFactory.getLogger(PubsApp.class);
 
     private static final EntityManager em =
             Persistence.createEntityManagerFactory("MySQL-pubs").createEntityManager();

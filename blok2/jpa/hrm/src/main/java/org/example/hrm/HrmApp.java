@@ -3,19 +3,18 @@ package org.example.hrm;
 import org.example.hrm.dao.PersonDao;
 import org.example.hrm.domain.Address;
 import org.example.hrm.domain.ContactType;
+import org.example.hrm.domain.Laptop;
 import org.example.hrm.domain.Person;
 
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
-import static javax.persistence.Persistence.createEntityManagerFactory;
+import static org.example.Em.em;
 
 public class HrmApp {
 
-    public static final EntityManager em = createEntityManagerFactory("MySQL-hrm").createEntityManager();
     private static final PersonDao personDao = PersonDao.instance(em);
 
     public static void main(String[] args) {
@@ -30,6 +29,8 @@ public class HrmApp {
                 .type(ContactType.Vip)
                 .address(Address.builder().street("S").housenumber(32).build())
                 .build();
+
+        p.addLaptop(Laptop.builder().brand("DELL").build());
 
         personDao.save(p);
 

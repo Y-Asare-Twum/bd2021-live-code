@@ -20,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HrmAppIT {
 
-    public static final EntityManager em =
-            Persistence.createEntityManagerFactory("H2-hrm").createEntityManager();
+    public static final EntityManager em = Persistence.createEntityManagerFactory("H2-hrm").createEntityManager();
 
     private static final PersonDao personDao = PersonDao.instance(em);
     private static final TeamDao teamDao = TeamDao.instance(em);
