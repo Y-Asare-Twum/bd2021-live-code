@@ -7,6 +7,7 @@ import org.example.hrm.domain.Job;
 import org.example.hrm.domain.Laptop;
 import org.example.hrm.domain.Person;
 import org.example.hrm.domain.Team;
+import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,14 @@ class HrmAppIT {
 
         scrumteam = Team.builder().yell("Scrum!").build();
         teamDao.save(scrumteam);
+    }
+
+    @After
+    public void teardown() {
+        // If some tests have open transactions because of exceptions (like in validatePerson)
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
     }
 
     @Test

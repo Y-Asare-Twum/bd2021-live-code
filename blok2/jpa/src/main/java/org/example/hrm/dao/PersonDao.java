@@ -5,6 +5,7 @@ import org.example.Dao;
 import org.example.hrm.domain.Person;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -58,6 +59,13 @@ public class PersonDao extends Dao<Person, Long> {
                         "JOIN FETCH p.scrumteam " +
                         "JOIN FETCH p.laptops",
                 Person.class).getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Person> findByNameNative(String name) {
+        Query query = em.createNativeQuery("SELECT * FROM PERSON WHERE NAME LIKE ?", Person.class);
+        query.setParameter(1, name + "%");
+        return (List<Person>) query.getResultList();
     }
 
 }

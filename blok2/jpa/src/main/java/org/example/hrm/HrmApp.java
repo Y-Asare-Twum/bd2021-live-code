@@ -22,10 +22,9 @@ public class HrmApp {
         // See HrmAppIT
 
         Person p = Person.builder().name("Jan")
-                .creationDate(new Date())
                 .birthDate(LocalDate.of(1979, 8, 22))
                 .birthDateTime(LocalDateTime.of(1979, 8, 22, 6, 10))
-                .birthDateTime2(LocalDateTime.of(1979, 8, 22, 6, 10))
+                .creationDate(new Date())
                 .creationTime(LocalTime.now())
                 .hasDriversLicence(true)
                 .type(ContactType.Vip)

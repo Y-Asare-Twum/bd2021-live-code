@@ -3,7 +3,7 @@ package org.example.hrm;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter(autoApply = true)
+// @Converter(autoApply = true)
 public class BooleanTFConverter implements AttributeConverter<Boolean, String> {
 
     @Override

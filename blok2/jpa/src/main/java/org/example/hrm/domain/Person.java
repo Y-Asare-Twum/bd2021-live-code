@@ -5,7 +5,6 @@ package org.example.hrm.domain;
 import lombok.*;
 import org.example.Identifiable;
 import org.example.hrm.BooleanTFConverter;
-import org.example.hrm.LocalDateTimeAttributeConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -38,26 +37,21 @@ public class Person implements Identifiable<Long> {
 
     private int age;
 
-    @Temporal(TemporalType.DATE)
-    private Date creationDate;
-
-    @Temporal(TemporalType.DATE)
-    private Date creationDate2;
-
     @Convert(converter = BooleanTFConverter.class)
     private Boolean hasDriversLicence;
 
-    private LocalDate birthDate;
-
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
-    private LocalDateTime birthDateTime;
-
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
-    private LocalDateTime birthDateTime2;
+    @Temporal(TemporalType.DATE)
+    private Date creationDate;
 
     private LocalTime creationTime;
 
-    @Enumerated(EnumType.STRING)
+    private LocalDate birthDate;
+
+    // LocalDateTimeAttributeConverter has autoApply=true
+    // @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDateTime birthDateTime;
+
+    @Enumerated(EnumType.STRING) // save enum name instead of ordinal
     private ContactType type;
 
     @Embedded
@@ -71,16 +65,18 @@ public class Person implements Identifiable<Long> {
     @Basic(fetch = LAZY)
     private byte[] image; // only loaded when explicitly called (with getImage()) on a managed object.
 
-    // relationships
+    // Relationships --------------------------------
 
     //      single valued (..ToOne)
 
+    // UniDi
     @ManyToOne(cascade = MERGE/*, fetch = LAZY*/) // On merge cascade
     private Job job; // FK
 
     // BiDi
     @ManyToOne(cascade = MERGE/*, fetch = LAZY*/) // On merge cascade
     @ToString.Exclude // to break circular dependency with Team in tostring
+    @EqualsAndHashCode.Exclude
     private Team scrumteam; // FK
 
     // UniDi
@@ -90,7 +86,7 @@ public class Person implements Identifiable<Long> {
     //      collection valued (..ToMany)
 
     @OneToMany(cascade = PERSIST, fetch = LAZY)
-    private Set<Laptop> laptops;
+    private Set<Laptop> laptops = new HashSet<>();
 
     // BiDi, passive config side (passive, since FK is in join table)
     @ManyToMany(cascade = PERSIST/*, mappedBy = "employees"*/) // either use mappedBy or use JoinTable on either manytomany side (of your choice); it doesn't matter which side

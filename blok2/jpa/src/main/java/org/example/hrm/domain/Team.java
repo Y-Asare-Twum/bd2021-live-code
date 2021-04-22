@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
-@Data @Builder @AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(exclude = "members")
+@Data @Builder @AllArgsConstructor @NoArgsConstructor
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Team.findAll", query = "SELECT e FROM Team e"),

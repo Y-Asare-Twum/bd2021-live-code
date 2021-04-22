@@ -10,7 +10,7 @@ public class Department extends AbstractEntity {
     private String name;
 
     // Bidi, passive non-config side (passive, since FK is in join table, non-config since mappedBy/JoinTable is on the other side)
-    @ManyToMany
+    @ManyToMany(mappedBy = "worksAt")
     private List<Person> employees = new ArrayList<>();
 
     public Department() { }
