@@ -13,7 +13,7 @@
     <artifactId>jpa</artifactId>
 
     <modules>
-        <module>post1</module>
+        <module>post</module>
         <module>hrm</module>
     </modules>
 
