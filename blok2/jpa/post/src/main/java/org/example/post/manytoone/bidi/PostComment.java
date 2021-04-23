@@ -1,4 +1,4 @@
-package org.example.post.manytoone.uni;
+package org.example.post.manytoone.bidi;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,17 +7,22 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-public class Post {
+public class PostComment {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private long id;
 
     private String title;
 
-}
+    @ManyToOne
+    private Post post;
 
+    public PostComment(String title) {
+        this.title = title;
+    }
+}
