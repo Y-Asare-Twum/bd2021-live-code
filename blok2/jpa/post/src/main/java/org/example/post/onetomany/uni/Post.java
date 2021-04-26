@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class Post {
@@ -18,8 +21,9 @@ public class Post {
 
     private String title;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default // Builder should take default value (new ArrayList), otherwise builder sets comments to null
+    @OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true)
+    @JoinColumn(name = "postId")
+    @Builder.Default // Builder should take default value (new ArrayList), otherwise builder sets comments to null (recommended in Uni, mandatory in BiDi)
     private List<PostComment> comments = new ArrayList<>();
 
 }

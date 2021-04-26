@@ -2,7 +2,7 @@ package org.example.post.manytoone.bidi;
 
 import javax.persistence.EntityManager;
 
-import static org.example.Em.*;
+import static org.example.Config.*;
 
 public class App {
 

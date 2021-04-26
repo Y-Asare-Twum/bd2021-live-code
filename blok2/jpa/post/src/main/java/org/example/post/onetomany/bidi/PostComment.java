@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class PostComment {
@@ -19,7 +21,7 @@ public class PostComment {
 
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     private Post post;
 
     public PostComment(String title) {
