@@ -25,6 +25,10 @@ public class App extends AppInit {
         // - update on post
         // - delete on postcomment (because orphanRemoval=true)
 
+        // Get all postcomments is easy in this solution, since collection is already available:
+        Post find = find(em, post.getId(), Post.class);
+        find.getComments().forEach(System.out::println);
+
         // Possible improvements:
         // 1) Use a @JoinColumn on Post.comments to prevent additional table.
         // 2) Make relationship bidi.

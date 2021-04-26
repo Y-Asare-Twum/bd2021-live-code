@@ -1,14 +1,13 @@
 package org.example.post.manytoone.bidi;
 
-import javax.persistence.EntityManager;
+import org.example.AppInit;
 
 import static org.example.Config.*;
 
-public class App {
+public class App extends AppInit {
 
-    private static final EntityManager em = em(manyToOneBidi);
-
-    public static void main(String[] args) {
+    // Same as onetomany.bidi
+    private void start() {
         Post post = Post.builder().title("first").build();
 
         post.addComment(new PostComment("My first review"));
@@ -16,6 +15,19 @@ public class App {
         post.addComment(new PostComment("My third review"));
 
         persist(em, post);
+
+        // This results in:
+        // - just two tables
+        // - just one SQL statement for each persisted PostComment entity
+
+        // Same logic for update/remove:
+        post.removeComment(post.getComments().get(0));
+        merge(em, post);
+        // This results in:
+        // - only one delete on postcomment (because orphanRemoval=true)
     }
 
+    public App() { super(manyToOneBidi); }
+
+    public static void main(String[] args) { new App().start(); }
 }

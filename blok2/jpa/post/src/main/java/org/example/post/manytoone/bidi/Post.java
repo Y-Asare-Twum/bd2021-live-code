@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class Post {
 
     private String title;
 
-    @OneToMany(cascade = ALL, mappedBy = "post", fetch = LAZY)
+    @OneToMany(mappedBy = "post", cascade = ALL, fetch = LAZY, orphanRemoval = true)
     @Builder.Default // Builder should take default value (new ArrayList), otherwise builder sets comments to null
     private List<PostComment> comments = new ArrayList<>();
 
@@ -29,6 +32,11 @@ public class Post {
     public void addComment(PostComment pc) {
         this.comments.add(pc);
         pc.setPost(this);
+    }
+
+    public void removeComment(PostComment comment) {
+        this.comments.remove(comment);
+        comment.setPost(null);
     }
 
 }

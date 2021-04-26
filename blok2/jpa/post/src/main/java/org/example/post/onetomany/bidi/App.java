@@ -2,14 +2,11 @@ package org.example.post.onetomany.bidi;
 
 import org.example.AppInit;
 
-import javax.persistence.EntityManager;
-
 import static org.example.Config.*;
 
 public class App extends AppInit {
 
-    private static final EntityManager em = em(oneToManyBidi);
-
+    // Same as manytoone.bidi
     private void start() {
         Post post = Post.builder().title("first").build();
 

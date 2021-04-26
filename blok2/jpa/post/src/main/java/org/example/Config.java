@@ -47,4 +47,9 @@ public class Config {
         em.getTransaction().commit();
     }
 
+    public static <T> T find(EntityManager em, long id, Class<T> c) {
+        em.clear(); // mimic JEE, i.e. entity is detached by default
+        return em.find(c, id);
+    }
+
 }
