@@ -16,13 +16,13 @@ public class App extends AppInit {
         PostComment my_second_review = PostComment.builder().title("My second review").post(post).build();
         PostComment my_third_review = PostComment.builder().title("My third review").post(post).build();
 
-        persist(em, my_first_review);
-        persist(em, my_second_review);
-        persist(em, my_third_review);
+        persist(em, my_first_review); // two inserts: postcomment 1 and post (cascade)
+        persist(em, my_second_review);// one insert:  postcomment 2
+        persist(em, my_third_review); // one insert:  postcomment 3
+        //                            -> four inserts in total :-)
 
-        // Get all postcomments is also easy in this solution:
-        // - post.comments is not available, but
-        // - we can write a simple query for that:
+        // Since it's a uni relation, we don't already have the postcomments in a post, but
+        // getting these is easy; we can write a simple query for that:
         List<PostComment> comments = em.createQuery(
                 "select pc " +
                         "from PostComment pc " +

@@ -2,6 +2,7 @@ package org.example;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -49,8 +50,13 @@ public class Config {
     }
 
     public static <T> T find(EntityManager em, long id, Class<T> c) {
-        em.clear(); // mimic JEE, i.e. entity is detached by default
         return em.find(c, id);
+    }
+
+    public static <T> T findWithDetails(EntityManager em, long id, Class<T> c) {
+        TypedQuery<T> query = em.createNamedQuery(c.getSimpleName() + ".findWithDetails", c);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
 }

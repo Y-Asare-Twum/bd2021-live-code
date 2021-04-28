@@ -14,11 +14,7 @@ public class App extends AppInit {
         post.addComment(new PostComment("My second review"));
         post.addComment(new PostComment("My third review"));
 
-        persist(em, post);
-
-        // This results in:
-        // - just two tables
-        // - just one SQL statement for each persisted PostComment entity
+        persist(em, post); // four inserts: post and postcomment 1, 2, 3 (cascade) :-)
 
         // Same logic for update/remove:
         post.removeComment(post.getComments().get(0));

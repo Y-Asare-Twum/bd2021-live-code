@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
+@NamedQuery(name = "Post.findWithDetails", query = "SELECT p FROM Post p JOIN FETCH p.comments WHERE p.id=:id")
 public class Post {
 
     @Id @GeneratedValue
@@ -28,5 +26,10 @@ public class Post {
     // @JoinColumn(name = "postId") // possible improvement
     @Builder.Default // Builder should take default value (new ArrayList), otherwise builder sets comments to null (recommended in Uni, mandatory in BiDi)
     private List<PostComment> comments = new ArrayList<>();
+
+    // Convenience method
+    public void addComment(PostComment pc) {
+        this.comments.add(pc);
+    }
 
 }
