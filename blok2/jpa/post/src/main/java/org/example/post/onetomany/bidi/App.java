@@ -6,6 +6,8 @@ import static org.example.Config.*;
 
 public class App extends AppInit {
 
+    // See https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
+
     // Same as manytoone.bidi
     private void start() {
         Post post = Post.builder().title("first").build();
