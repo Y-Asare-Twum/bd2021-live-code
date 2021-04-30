@@ -13,6 +13,7 @@ public class Config {
     public static final String manyToOneBidi = "manyToOneBidi";
     public static final String oneToManyUni = "oneToManyUni";
     public static final String oneToManyBidi = "oneToManyBidi";
+    public static final String manyToManyUni = "manyToManyUni";
     public static final String manyToManyBidi = "manyToManyBidi";
 
     public static EntityManager em(String name) {
