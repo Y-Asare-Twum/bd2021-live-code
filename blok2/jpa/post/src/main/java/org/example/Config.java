@@ -9,6 +9,7 @@ import java.sql.Statement;
 import static org.example.Transaction.executeTransaction;
 
 public class Config {
+    public static final String enumeration = "enumeration";
     public static final String manyToOneUni = "manyToOneUni";
     public static final String manyToOneBidi = "manyToOneBidi";
     public static final String oneToManyUni = "oneToManyUni";
