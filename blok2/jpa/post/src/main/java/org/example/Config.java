@@ -16,6 +16,8 @@ public class Config {
     public static final String oneToManyBidi = "oneToManyBidi";
     public static final String manyToManyUni = "manyToManyUni";
     public static final String manyToManyBidi = "manyToManyBidi";
+    public static final String oneToOneUni = "oneToOneUni";
+    public static final String oneToOneBidi = "oneToOneBidi";
 
     public static EntityManager em(String name) {
         return Persistence.createEntityManagerFactory(name).createEntityManager();
@@ -52,6 +54,7 @@ public class Config {
     }
 
     public static <T> T find(EntityManager em, long id, Class<T> c) {
+        em.clear(); // clear persistence context, mimics JEE behaviour
         return em.find(c, id);
     }
 
