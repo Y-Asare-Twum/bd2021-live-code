@@ -16,8 +16,7 @@ public class App extends AppInit {
         persist(em, post);
 
         // results in two SELECTs, even though details is LAZY :-(
-        Post foundPost = find(em, post.getId(), Post.class);
-        System.out.println(foundPost);
+        find(em, post.getId(), Post.class);
 
         // Why? Hibernate fetches the child entity as well, so, instead of only one query,
         // Hibernate requires two select statements, like if it's EAGER fetching,

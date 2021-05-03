@@ -19,13 +19,13 @@ public class App extends AppInit {
         persist(em, post);
         // This results in:
         // - just two tables
-        // - just one SQL statement for each persisted PostComment entity
+        // - just one INSERT for each persisted PostComment entity
 
         // Same logic for update/remove:
         post.removeComment(post.getComments().get(0));
         merge(em, post);
         // This results in:
-        // - only one delete on postcomment (because orphanRemoval=true)
+        // - only one DELETE on postcomment (because orphanRemoval=true)
     }
 
     public App() { super(oneToManyBidi); }

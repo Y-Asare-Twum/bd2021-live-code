@@ -10,6 +10,8 @@ public class App extends AppInit {
     // See https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
 
     private void start() {
+        // onetomany.uni is evil, watch this:
+
         Post post = Post.builder().title("first").build();
 
         post.addComment(PostComment.builder().title("My first review").build());
@@ -24,8 +26,8 @@ public class App extends AppInit {
 
         // Possible improvements:
         // 1) Use a @JoinColumn on Post.comments to prevent additional table.
-        // 2) Make relationship bidi (see onetomany.bidi) to reduce number of queries to four INSERTs.
-        // 3) Use ManyToOne uni (see manytoone.uni) and then use query to get all comments from post.
+        // 2) Make relationship bidi (see onetomany.bidi) to prevent additional table and to reduce number of queries to four INSERTs.
+        // 3) Use ManyToOne uni (see manytoone.uni) to prevent additional table and to reduce number of queries to four INSERTs, and then use a simple query to get all comments from post.
 
         getComments(post);
     }

@@ -17,9 +17,12 @@ public class App extends AppInit {
         // results in one SELECT, no details fetched since uni
         post = find(em, post.getId(), Post.class);
 
-        // results in one SELECT, find by POST id
+        // results in one SELECT (note: find details by *post* id), so post is LAZY now.
         PostDetails postDetails = find(em, post.getId(), PostDetails.class);
-        System.out.println(postDetails);
+
+        // results in another SELECT, lazily loaded:
+        Post postDetailsPost = postDetails.getPost();
+        System.out.println("Post belonging to details: " + postDetailsPost);
     }
 
     public App() { super(oneToOneUni); }
