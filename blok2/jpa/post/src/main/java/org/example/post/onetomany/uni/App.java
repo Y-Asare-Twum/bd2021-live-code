@@ -9,6 +9,8 @@ public class App extends AppInit {
 
     // See https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
 
+    // Better not use this.
+
     private void start() {
         // onetomany.uni is evil, watch this:
 

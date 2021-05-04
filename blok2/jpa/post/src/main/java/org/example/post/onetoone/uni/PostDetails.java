@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class PostDetails { // child side
-    @Id // @GeneratedValue not generated, since we use @MapsId and the postId is FK and PK
+    @Id // @GeneratedValue? no, since we use @MapsId and the postId is FK and PK
     private Long id;
 
     private LocalDateTime createdOn;

@@ -28,7 +28,7 @@ public class App extends AppInit {
         post.removeTag(hib);
         merge(em, post);
 
-        // Since it's a uni relation, we only have the tags beloning to a post,
+        // Since it's a uni relation, we only have the tags belonging to a post,
         // we don't already have the posts in a tag, but
         // getting these is easy; we can write a query for that:
         List<Post> posts =
