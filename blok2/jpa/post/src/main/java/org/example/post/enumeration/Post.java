@@ -15,13 +15,18 @@ public class Post {
 
     private String title;
 
-    @Enumerated(EnumType.STRING) // EnumType is optional: not most efficient way.
+    // single valued enum
+    @Enumerated // (EnumType.STRING) // EnumType is optional: string is not the most efficient way.
+    // @Convert(converter = TagConverter.class) // OR use a converter INSTEAD of @Enumerated
     private Tag rootTag;
 
-    @ElementCollection // onetomany to enum
+    // collection valued enum
+    @ElementCollection
+    // @Convert(converter = TagConverter.class) // AND use a converter TOGETHER WITH @ElementCollection
     @Singular
     private Set<Tag> tags;
 
+    // onetomany to an entity (instead of enum) with hard coded database values
     @OneToMany
     @Singular
     private Set<Category> categories = new HashSet<>();
