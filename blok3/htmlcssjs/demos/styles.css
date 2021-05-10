@@ -1,0 +1,51 @@
+div { /* element selector*/
+    color: red
+}
+
+#someId { /*id selector*/
+    border: 2px solid black;
+}
+
+#container { /*id selector*/
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.someClass { /*class selector*/
+    font-weight: lighter;
+    color: pink;
+}
+
+h1 {
+    color: green;
+}
+
+a:hover { /*pseudo element selector*/
+    cursor: crosshair;
+}
+
+a:before {
+    content: "♥";
+}
+
+table:last-child {
+    border: 3px solid black;
+}
+
+#div1, #div2 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+#div1 {
+    top: 120px;
+    left: 20px;
+    background-color: blue;
+}
+#div2 {
+    top: 100px;
+    left: 60px;
+    background-color: orange;
+}
