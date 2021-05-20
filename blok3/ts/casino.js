@@ -1,4 +1,3 @@
-// @ts-check
 class Person {
     /**
      * @param {string} name
@@ -77,3 +76,8 @@ roulette.placeBet(playerTwo, 31);
 roulette.placeBet(playerTwo, 5);
 roulette.placeBet(playerTwo, 4);
 roulette.play();
+
+// @ts-ignore
+let four = '22' * 2;
+
+console.log(four)
