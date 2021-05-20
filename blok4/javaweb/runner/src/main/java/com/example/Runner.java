@@ -22,7 +22,7 @@ public class Runner {
         // tomcat.addRole("bram", "admin");
         // tomcat.addUser("bram", "bram");
 
-        StandardContext ctx = (StandardContext) tomcat.addWebapp("/simplewebapp", new File(webappDirLocation).getAbsolutePath());
+        StandardContext ctx = (StandardContext) tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
 
         WebResourceRoot resources = new StandardRoot(ctx);
         resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes",

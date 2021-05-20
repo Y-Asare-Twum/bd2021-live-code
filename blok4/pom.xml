@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>javaweb</module>
-        <module>runner</module>
     </modules>
 
     <properties>
