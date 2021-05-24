@@ -12,7 +12,13 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         System.out.println("DO GET CALLED!!!! ####################################");
 
+        readFromRequest(req); // http://localhost:8082/my?name=john
         writeToResponse(req, resp);
+    }
+
+    private void readFromRequest(HttpServletRequest req) {
+        String name = req.getParameter("name");
+        System.out.printf("Name = %s", name);
     }
 
     private void writeToResponse(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
