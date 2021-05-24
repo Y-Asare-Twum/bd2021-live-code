@@ -10,7 +10,7 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        System.out.println("DO GET CALLED!!!! ####################################");
+        System.out.println("DO GET CALLED");
 
         readFromRequest(req); // http://localhost:8082/my?name=john
         writeToResponse(req, resp);
