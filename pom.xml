@@ -21,20 +21,18 @@
         <module>blok2</module>
         <module>blok3</module>
         <module>blok4</module>
-        <module>javaweb</module>
     </modules>
 
 
     <dependencyManagement>
         <dependencies>
             <!-- junit 4: -->
-            <!--
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
-            </dependency> -->
+            </dependency>
             <!-- junit 5: -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

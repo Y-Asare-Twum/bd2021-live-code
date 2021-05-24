@@ -11,21 +11,25 @@
 
     <artifactId>runner</artifactId>
 
+    <properties>
+        <tomcat-embed-core.version>9.0.0.M6</tomcat-embed-core.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.0.M6</version>
+            <version>${tomcat-embed-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-logging-juli</artifactId>
-            <version>9.0.0.M6</version>
+            <version>${tomcat-embed-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <version>9.0.0.M6</version>
+            <version>${tomcat-embed-core.version}</version>
         </dependency>
     </dependencies>
 
