@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class MyServlet extends HttpServlet {
 
+    private String name;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         System.out.println("DO GET CALLED");
@@ -17,15 +19,15 @@ public class MyServlet extends HttpServlet {
     }
 
     private void readFromRequest(HttpServletRequest req) {
-        String name = req.getParameter("name");
-        System.out.printf("Name = %s", name);
+        this.name = req.getParameter("name");
+        System.out.printf("Name = %s %n", name);
     }
 
     private void writeToResponse(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Write to the response, for example either:
 
         // 1) text
-        // resp.getWriter().write("Hello");
+        resp.getWriter().write("Hello " + (name != null ? name : ""));
 
         // 2) json
         // resp.getWriter().write("{\"message\": \"Hello\"}");
@@ -40,17 +42,18 @@ public class MyServlet extends HttpServlet {
         //                 "</html>");
 
         // 4) HTML with text blocks (Java 15+)
+        // String title = "Hello text blocks!";
         // resp.getWriter().write("""
         //         <html>
         //             <body>
-        //                 <h2>Hello text blocks!</h2>
+        //                 <h2>$title</h2>
         //                 <a href="index.jsp">Back</a>
         //             </body>
         //         </html>
-        //         """);
+        //         """.replace("$title", title));
 
         // 5) Using a jsp
-        req.getRequestDispatcher("myservlet.jsp").forward(req, resp);
+        // req.getRequestDispatcher("myservlet.jsp").forward(req, resp);
     }
 
 }
