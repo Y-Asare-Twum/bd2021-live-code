@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>helloworldrestapi</module>
+        <module>helloworldrest</module>
     </modules>
 
 </project>
