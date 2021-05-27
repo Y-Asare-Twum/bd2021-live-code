@@ -11,8 +11,8 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-@Path("/contacts")
-public class ContactsResource {
+@Path("/users")
+public class UsersResource {
 
     @Inject
     private Logger log; // WELD is DI container
@@ -32,9 +32,9 @@ public class ContactsResource {
     @Produces(APPLICATION_JSON)
     public List<Contact> get(@QueryParam("name") String n) {
         if (n == null) {
-            log.error("Geen zoekparameter meegegeven, geef alle contacts terug.");
+            log.debug("Geen zoekparameter meegegeven, geef alle contacts terug.");
         } else {
-            log.error("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
+            log.debug("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
         }
 
         return n == null ?
