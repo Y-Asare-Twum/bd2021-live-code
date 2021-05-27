@@ -1,4 +1,4 @@
-package com.example.resources;
+package org.example.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,7 +10,7 @@ public class HelloWorldResource {
 
     @GET
     public Response get() {
-        return Response.ok()
+        return Response.status(400)
                 .type(MediaType.TEXT_PLAIN_TYPE)
                 .entity("Hello world!") // response body
                 .build();

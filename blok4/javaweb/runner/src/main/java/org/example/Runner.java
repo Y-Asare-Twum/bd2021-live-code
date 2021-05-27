@@ -1,4 +1,4 @@
-package com.example;
+package org.example;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.WebResourceRoot;

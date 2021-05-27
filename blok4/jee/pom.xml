@@ -15,6 +15,7 @@
 
     <modules>
         <module>helloworldrest</module>
+        <module>contactsrest</module>
     </modules>
 
 </project>
