@@ -14,10 +14,10 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("/contacts")
 public class ContactsResource {
 
-    @Inject
+    @Inject // @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
     private Logger log; // WELD is DI container
 
-    private Contact.ContactBuilder cb = Contact.builder();
+    private final Contact.ContactBuilder cb = Contact.builder();
 
     private final List<Contact> contacts = new ArrayList<>(List.of(
             cb.name("Bram").age(41).id(1L).build(),

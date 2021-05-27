@@ -7,7 +7,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-@ApplicationScoped // ongeveer @Injectable in Angular
+@ApplicationScoped // ongeveer @Injectable in Angular,
+// ApplicationScoped betekent: maak  deze class Singleton en laat de server er een instantiëren!
+// @Singleton // enables super powers, such as Transaction management, concurrency, ...
 public class LoggerProducer {
 
     @Produces
