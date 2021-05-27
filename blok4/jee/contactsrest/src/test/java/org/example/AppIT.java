@@ -7,12 +7,14 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import java.io.File;
 import java.net.URL;
 
 import static javax.ws.rs.client.Entity.entity;
@@ -41,7 +43,7 @@ public class AppIT {
                 // .addClass(Contact.class)
                 .addAsWebInfResource("test-beans.xml", "beans.xml") // to activate CDI
                 // .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
-                ;
+                .addAsLibraries(pomDependency("org.apache.logging.log4j", "log4j-slf4j-impl"));
 
         System.out.println(warFilled.toString(true));
         return warFilled;
@@ -60,6 +62,14 @@ public class AppIT {
 
         assertThat(postedContact, containsString("\"id\":1"));
         assertThat(postedContact, containsString("\"name\":\"Sammie\""));
+    }
+
+    private static File[] pomDependency(String groupId, String artifactId) {
+        return Maven.resolver()
+                .loadPomFromFile("pom.xml")
+                .resolve(groupId + ":" + artifactId)
+                .withTransitivity()
+                .asFile();
     }
 
 }

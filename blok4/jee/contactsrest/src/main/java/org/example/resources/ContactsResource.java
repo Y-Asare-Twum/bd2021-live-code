@@ -14,8 +14,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("/contacts")
 public class ContactsResource {
 
-    // @Inject // @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
-    // private Logger log; // WELD is DI container
+    @Inject // @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
+    private Logger log; // WELD is DI container
 
     private final Contact.ContactBuilder cb = Contact.builder();
 
@@ -31,11 +31,11 @@ public class ContactsResource {
     @GET
     @Produces(APPLICATION_JSON)
     public List<Contact> get(@QueryParam("name") String n) {
-        // if (n == null) {
-        //     log.error("Geen zoekparameter meegegeven, geef alle contacts terug.");
-        // } else {
-        //     log.error("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
-        // }
+        if (n == null) {
+            log.error("Geen zoekparameter meegegeven, geef alle contacts terug.");
+        } else {
+            log.error("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
+        }
 
         return n == null ?
                 this.contacts :
