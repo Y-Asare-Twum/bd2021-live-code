@@ -22,7 +22,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId> <!--Bill of Material-->
+                <artifactId>arquillian-bom</artifactId> <!-- Bill of Materials -->
                 <version>1.6.0.Final</version>
                 <scope>import</scope>
                 <type>pom</type>

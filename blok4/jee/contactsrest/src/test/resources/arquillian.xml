@@ -5,8 +5,8 @@
     <container qualifier="wlp" default="true">
         <configuration>
             <!-- for managed -->
-            <property name="wlpHome">C:\Java\openliberty-javaee8-20.0.0.12\wlp</property>
-            <!--<property name="httpPort">9080</property>-->
+            <property name="wlpHome">C:/Java/openliberty-javaee8-20.0.0.12/wlp</property>
+            <property name="httpPort">9080</property>
 
             <!-- for remote -->
             <!--

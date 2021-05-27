@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-
 import java.net.URL;
 
 import static javax.ws.rs.client.Entity.entity;
@@ -22,18 +21,15 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(Arquillian.class) // 1
-class AppIT {
+public class AppIT {
 
     @ArquillianResource
     private URL deploymentURL;
 
     private String contactsResourcePath;
-    private final String contactsUri = "api/contacts";
 
     @Before
-    public void setup() {
-        contactsResourcePath = deploymentURL + contactsUri;
-    }
+    public void setup() { contactsResourcePath = deploymentURL + "api/contacts"; }
 
     @Deployment // 2: creeer een war zodat arq deze kan deployen
     public static Archive<?> createDeployment() {
@@ -53,16 +49,16 @@ class AppIT {
 
     @Test
     public void whenContactIsPostedICanGetIt() {
-        // TODO
-        Client postmanAlsHetWare = ClientBuilder.newClient();
+        Client httpClient = ClientBuilder.newClient();
 
         Contact c = Contact.builder().id(1L).name("Sammie").age(42).build();
 
-        String postedContact = postmanAlsHetWare
+        String postedContact = httpClient
                 .target(contactsResourcePath) // URI
-                .request().post(entity(c, APPLICATION_JSON), String.class);
+                .request()
+                .post(entity(c, APPLICATION_JSON), String.class);
 
-        assertThat(postedContact, containsString("\"id\":\"1\""));
+        assertThat(postedContact, containsString("\"id\":1"));
         assertThat(postedContact, containsString("\"name\":\"Sammie\""));
     }
 
