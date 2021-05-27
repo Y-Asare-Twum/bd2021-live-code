@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -32,9 +33,9 @@ public class ContactsResource {
     @Produces(APPLICATION_JSON)
     public List<Contact> get(@QueryParam("name") String n) {
         if (n == null) {
-            log.error("Geen zoekparameter meegegeven, geef alle contacts terug.");
+            log.debug("Geen zoekparameter meegegeven, geef alle contacts terug.");
         } else {
-            log.error("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
+            log.debug("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
         }
 
         return n == null ?
@@ -52,7 +53,7 @@ public class ContactsResource {
         return this.contacts.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new BadRequestException(String.format("Contact with id %s not found.", id)));
+                .orElseThrow(() -> new BadRequestException(format("Contact with id %s not found.", id)));
     }
 
     @POST
