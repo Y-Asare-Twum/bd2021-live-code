@@ -7,18 +7,17 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import java.io.File;
 import java.net.URL;
 
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.example.util.Util.pomDependency;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -46,14 +45,15 @@ public class AppIT {
                 .addAsLibraries(pomDependency("org.apache.logging.log4j", "log4j-slf4j-impl"));
 
         System.out.println(warFilled.toString(true));
+
         return warFilled;
     }
 
-    @Test
+    @Test // 3: maak testjes
     public void whenContactIsPostedICanGetIt() {
         Client httpClient = ClientBuilder.newClient();
 
-        Contact c = Contact.builder().id(1L).name("Sammie").age(42).build();
+        Contact c = Contact.builder().id(1L).firstName("Sammie").age(42).build();
 
         String postedContact = httpClient
                 .target(contactsResourcePath) // URI
@@ -62,14 +62,6 @@ public class AppIT {
 
         assertThat(postedContact, containsString("\"id\":1"));
         assertThat(postedContact, containsString("\"name\":\"Sammie\""));
-    }
-
-    private static File[] pomDependency(String groupId, String artifactId) {
-        return Maven.resolver()
-                .loadPomFromFile("pom.xml")
-                .resolve(groupId + ":" + artifactId)
-                .withTransitivity()
-                .asFile();
     }
 
 }

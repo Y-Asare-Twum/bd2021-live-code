@@ -21,9 +21,9 @@ public class ContactsResource {
     private final Contact.ContactBuilder cb = Contact.builder();
 
     private final List<Contact> contacts = new ArrayList<>(List.of(
-            cb.name("Bram").age(41).id(1L).build(),
-            cb.name("Joop").age(23).id(2L).build(),
-            cb.name("Mieke").age(45).id(3L).build()
+            cb.firstName("Bram").surname("Janssens").email("s.a.janssens@gmail.com").age(41).id(1L).build(),
+            cb.firstName("Joop").surname("Janssens").email("j.janssens@gmail.com").age(23).id(2L).build(),
+            cb.firstName("Mieke").surname("Janssens").email("m.janssens@gmail.com").age(45).id(3L).build()
     ));
 
     // uri: .../contacts
@@ -31,17 +31,17 @@ public class ContactsResource {
 
     @GET
     @Produces(APPLICATION_JSON)
-    public List<Contact> get(@QueryParam("name") String n) {
-        if (n == null) {
+    public List<Contact> get(@QueryParam("q") String q) {
+        if (q == null) {
             log.debug("Geen zoekparameter meegegeven, geef alle contacts terug.");
         } else {
-            log.debug("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", n);
+            log.debug("Zoekparameter {} meegegeven, geef gefilterde contacts terug.", q);
         }
 
-        return n == null ?
+        return q == null ?
                 this.contacts :
                 contacts.stream()
-                        .filter(c -> c.getName().contains(n))
+                        .filter(c -> c.getFirstName().contains(q))
                         .collect(toList());
     }
 
