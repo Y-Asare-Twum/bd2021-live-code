@@ -17,14 +17,40 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 
+    <!--Stap 1:-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId> <!--Bill of Material-->
+                <version>1.6.0.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
+            <!--version scope already provided in dependency management in my parent pom-->
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- Stap 2. Arquillian JUnit integration framework (required at all times) -->
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <!--version scope already provided in the BOM-->
+        </dependency>
+        <!-- 3. Arquillian container adapter for the target container-->
+        <!-- container can be either: embedded, managed or remote -->
+        <dependency>
+            <groupId>io.openliberty.arquillian</groupId>
+            <artifactId>arquillian-liberty-managed</artifactId>
         </dependency>
     </dependencies>
 </project>
