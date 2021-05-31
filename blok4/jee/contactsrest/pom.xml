@@ -39,6 +39,8 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+            <!--not available on server: scope is compile, not provided.-->
         </dependency>
         <dependency>
             <groupId>junit</groupId>

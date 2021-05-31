@@ -1,43 +1,51 @@
 package org.example.domain;
 
-import javax.enterprise.context.ApplicationScoped;
-import java.util.ArrayList;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionManagement;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toList;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
+import static javax.ejb.TransactionManagementType.CONTAINER;
 
-// Stateful! I can include state in this class.
-@ApplicationScoped // ≈ @Injectable
-public class ContactDao {
+// @ApplicationScoped // Managed CDI bean, dus geen super powers
+@Stateless //            Managed Enterprise Java Bean (EJB): hij krijgt super powers (zoals transaction capabilities).
+//                       Stateless: de container maakt bij elk request een nieuwe instance;
+//                       de class kan dus ook beter geen data-fields bevatten (dat heeft geen zin)!
+@TransactionManagement(CONTAINER) // = default; whole annotation can be omitted when choosing CONTAINER
+public class ContactDao implements IContactDao {
 
-    // STATE:
+    // STATE: doesn't make sense in Stateless EJB.
+    // private String name;
 
-    private final Contact.ContactBuilder cb = Contact.builder();
-
-    private final List<Contact> contacts = new ArrayList<>(List.of(
-            cb.firstName("Bram").surname("Janssens").email("s.a.janssens@gmail.com").age(41).id(1L).build(),
-            cb.firstName("Joop").surname("Janssens").email("j.janssens@gmail.com").age(23).id(2L).build(),
-            cb.firstName("Mieke").surname("Janssens").email("m.janssens@gmail.com").age(45).id(3L).build()
-    ));
+    @PersistenceContext // Container managed EntityManager
+    private EntityManager em;
 
     // BEHAVIOUR:
 
     public List<Contact> get(String q) {
-        return q == null ? this.contacts :
-                contacts.stream()
-                        .filter(c -> c.getFirstName().contains(q))
-                        .collect(toList());
+        return q == null ?
+                em.createNamedQuery("Contact.findAll", Contact.class)
+                        .getResultList() :
+                em.createNamedQuery("Contact.findByQ", Contact.class)
+                        .setParameter("q", "%" + q + "%")
+                        .getResultList();
     }
 
     public Optional<Contact> getById(Long id) {
-        return this.contacts.stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst();
+        return Optional.of(em.find(Contact.class, id));
     }
 
+    // @Transactional NIET deze!
+    @TransactionAttribute(REQUIRED)  // = default; whole annotation can be omitted when choosing REQUIRED.
+    //                                  Deze methode wordt in een databasetransactie op de server uitgevoerd.
+    //                                  Als er al een transactie loopt, gebruikt de server die, anders maakt hij een nieuwe transactie aan.
     public Contact add(Contact c) {
-        this.contacts.add(c);
+        em.persist(c);
         return c;
     }
 }

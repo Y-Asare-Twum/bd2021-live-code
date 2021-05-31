@@ -18,8 +18,9 @@ import java.util.List;
 
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.util.Util.pomDependency;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class) // 1
 public class AppIT {
@@ -41,7 +42,7 @@ public class AppIT {
                 // .addClass(ContactsResource.class)
                 // .addClass(Contact.class)
                 .addAsWebInfResource("beans-test.xml", "beans.xml") // to activate CDI
-                // .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml") // for JPA
                 .addAsLibraries(pomDependency("org.apache.logging.log4j", "log4j-slf4j-impl"));
 
         System.out.println(warFilled.toString(true));
@@ -71,8 +72,8 @@ public class AppIT {
                 .request()
                 .post(entity(c, APPLICATION_JSON), String.class);
 
-        assertThat(postedContact).contains("\"id\":" + ID);
-        assertThat(postedContact).contains("\"firstName\":\"" + FIRST_NAME + "\"");
+        assertTrue(postedContact.contains("\"id\":" + ID));
+        assertTrue(postedContact.contains("\"firstName\":\"" + FIRST_NAME + "\""));
 
         List<Contact> contactsAfterPost = httpClient
                 .target(contactsResourcePath) // URI
@@ -81,14 +82,14 @@ public class AppIT {
 
         int after = contactsAfterPost.size();
 
-        assertThat(after).isGreaterThan(before);
+        assertTrue(after > before);
 
         Contact contact = httpClient
                 .target(contactsResourcePath + "/" + ID)
                 .request()
                 .get(Contact.class);
 
-        assertThat(contact).isNotNull();
+        assertNotNull(contact);
     }
 
 }
