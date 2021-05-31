@@ -2,6 +2,7 @@ package org.example.resources;
 
 import org.example.domain.Contact;
 import org.example.domain.ContactDao;
+import org.example.domain.IContactDao;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -17,8 +18,8 @@ public class ContactsResource implements JsonResource {
     private Logger log; // WELD is DI container
     //                     bovenstaande regel is het zogenaamde injection point
 
-    @Inject
-    private ContactDao dao;
+    @Inject // new fashioned @EJB
+    private IContactDao dao; // talk to an interface, not to an implementation
 
     // uri: .../contacts
     //      .../contacts?name=Bram

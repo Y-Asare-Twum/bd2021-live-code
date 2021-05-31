@@ -18,11 +18,8 @@ import java.util.List;
 
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.util.Util.pomDependency;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class) // 1
 public class AppIT {
@@ -53,43 +50,45 @@ public class AppIT {
     }
 
     @Test // 3: maak testjes
+    @SuppressWarnings("unchecked")
     public void whenContactIsPostedItIsAddedAndICanGetItById() {
         final long ID = 10L;
+        final String FIRST_NAME = "Sammie";
 
         Client httpClient = ClientBuilder.newClient();
 
-        List contactsBeforePost = httpClient
+        List<Contact> contactsBeforePost = httpClient
                 .target(contactsResourcePath) // URI
                 .request()
                 .get(List.class);
 
         int before = contactsBeforePost.size();
 
-        Contact c = Contact.builder().id(ID).firstName("Sammie").age(42).build();
+        Contact c = Contact.builder().id(ID).firstName(FIRST_NAME).age(42).build();
 
         String postedContact = httpClient
                 .target(contactsResourcePath)
                 .request()
                 .post(entity(c, APPLICATION_JSON), String.class);
 
-        assertThat(postedContact, containsString("\"id\":" + ID));
-        assertThat(postedContact, containsString("\"firstName\":\"Sammie\""));
+        assertThat(postedContact).contains("\"id\":" + ID);
+        assertThat(postedContact).contains("\"firstName\":\"" + FIRST_NAME + "\"");
 
-        List contactsAfterPost = httpClient
+        List<Contact> contactsAfterPost = httpClient
                 .target(contactsResourcePath) // URI
                 .request()
                 .get(List.class);
 
         int after = contactsAfterPost.size();
 
-        assertTrue(after > before);
+        assertThat(after).isGreaterThan(before);
 
         Contact contact = httpClient
                 .target(contactsResourcePath + "/" + ID)
                 .request()
                 .get(Contact.class);
 
-        assertNotEquals(contact, null);
+        assertThat(contact).isNotNull();
     }
 
 }
