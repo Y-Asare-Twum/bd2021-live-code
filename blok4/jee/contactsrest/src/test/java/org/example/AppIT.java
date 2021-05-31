@@ -14,12 +14,15 @@ import org.junit.runner.RunWith;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.net.URL;
+import java.util.List;
 
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.example.util.Util.pomDependency;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class) // 1
 public class AppIT {
@@ -50,18 +53,43 @@ public class AppIT {
     }
 
     @Test // 3: maak testjes
-    public void whenContactIsPostedICanGetIt() {
+    public void whenContactIsPostedItIsAddedAndICanGetItById() {
+        final long ID = 10L;
+
         Client httpClient = ClientBuilder.newClient();
 
-        Contact c = Contact.builder().id(1L).firstName("Sammie").age(42).build();
+        List contactsBeforePost = httpClient
+                .target(contactsResourcePath) // URI
+                .request()
+                .get(List.class);
+
+        int before = contactsBeforePost.size();
+
+        Contact c = Contact.builder().id(ID).firstName("Sammie").age(42).build();
 
         String postedContact = httpClient
-                .target(contactsResourcePath) // URI
+                .target(contactsResourcePath)
                 .request()
                 .post(entity(c, APPLICATION_JSON), String.class);
 
-        assertThat(postedContact, containsString("\"id\":1"));
-        assertThat(postedContact, containsString("\"name\":\"Sammie\""));
+        assertThat(postedContact, containsString("\"id\":" + ID));
+        assertThat(postedContact, containsString("\"firstName\":\"Sammie\""));
+
+        List contactsAfterPost = httpClient
+                .target(contactsResourcePath) // URI
+                .request()
+                .get(List.class);
+
+        int after = contactsAfterPost.size();
+
+        assertTrue(after > before);
+
+        Contact contact = httpClient
+                .target(contactsResourcePath + "/" + ID)
+                .request()
+                .get(Contact.class);
+
+        assertNotEquals(contact, null);
     }
 
 }

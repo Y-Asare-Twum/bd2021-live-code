@@ -14,8 +14,8 @@ public class CorsFilter implements ContainerResponseFilter {
         MultivaluedMap<String, Object> headers = response.getHeaders();
 
         headers.add("Access-Control-Allow-Origin", "http://localhost:4200");
-        headers.add("Access-Control-Allow-Credentials", "true");
-        headers.add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
-        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+        headers.add("Access-Control-Allow-Credentials", "true"); // to return jwt in Authorization header
+        headers.add("Access-Control-Allow-Headers", "origin, authorization"); // content-type, accept too?
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE"); // OPTIONS, HEAD not needed?
     }
 }
