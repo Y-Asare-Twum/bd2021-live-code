@@ -1,6 +1,7 @@
 package org.example.resources;
 
 import org.example.domain.Contact;
+import org.example.domain.ContactDao;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -15,8 +16,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("/contacts")
 public class ContactsResource {
 
-    @Inject // @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
+    @Inject //             @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
     private Logger log; // WELD is DI container
+    //                     bovenstaande regel is het zogenaamde injection point
+
+    @Inject
+    private ContactDao dao;
 
     private final Contact.ContactBuilder cb = Contact.builder();
 

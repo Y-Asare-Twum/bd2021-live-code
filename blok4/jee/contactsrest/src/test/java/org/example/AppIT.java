@@ -36,11 +36,11 @@ public class AppIT {
     public static Archive<?> createDeployment() {
         WebArchive warEmpty = ShrinkWrap.create(WebArchive.class, "AppIT.war");
         WebArchive warFilled = warEmpty
-                .addPackages(true, App.class.getPackage()) // add all packages in my application
-                // .addClass(App.class) // dont forget! // selectively add classes
+                .addPackages(true, App.class.getPackage()) // Add all packages in my application
+                // .addClass(App.class) // dont forget!    // OR selectively add classes
                 // .addClass(ContactsResource.class)
                 // .addClass(Contact.class)
-                .addAsWebInfResource("test-beans.xml", "beans.xml") // to activate CDI
+                .addAsWebInfResource("beans-test.xml", "beans.xml") // to activate CDI
                 // .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsLibraries(pomDependency("org.apache.logging.log4j", "log4j-slf4j-impl"));
 
