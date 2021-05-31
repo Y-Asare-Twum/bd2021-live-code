@@ -1,6 +1,7 @@
 package org.example.resources;
 
 import org.example.domain.Contact;
+import org.example.util.JsonResource;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;

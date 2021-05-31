@@ -2,20 +2,16 @@ package org.example.resources;
 
 import org.example.domain.Contact;
 import org.example.domain.IContactDao;
+import org.example.util.JsonResource;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 import static java.lang.String.format;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/contacts") // @RequestScoped implicitly
-@Produces(APPLICATION_JSON)
-@Consumes(APPLICATION_JSON)
 public class ContactsResource implements JsonResource {
 
     @Inject //             @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
@@ -52,12 +48,15 @@ public class ContactsResource implements JsonResource {
         return this.dao.add(c);
     }
 
-    @GET @Path("/connected")
+
+    /*@GET @Path("connected")
     public Response conn() {
+        Contact jans = Contact.builder().id(100L).firstName("BRAAAAAM!").surname("Jans").email("fsdfdf@kfjdsf.com").build();
+        ContactDto dto = ContactDto.of(jans);
+
         return Response.status(200)
-                .type(APPLICATION_JSON)
-                .entity(Contact.builder().firstName("BRAAAAAM!").build()) // response body
+                .entity(dto) // response body
                 .links(Link.valueOf("hello!"))
                 .build();
-    }
+    }*/
 }
