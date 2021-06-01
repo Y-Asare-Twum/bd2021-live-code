@@ -9,8 +9,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.List;
 
-import static java.lang.String.format;
-
 @Path("/contacts") // @RequestScoped implicitly
 public class ContactsResource implements JsonResource {
 
@@ -37,10 +35,9 @@ public class ContactsResource implements JsonResource {
 
     // ...../contacts/1
 
-    @GET @Path("{id}")
-    public Contact getById(@PathParam("id") Long id) {
-        return this.dao.getById(id)
-                .orElseThrow(() -> new BadRequestException(format("Contact with id %s not found.", id)));
+    @Path("{id}")
+    public ContactResource getById(@PathParam("id") Long id) {
+        return new ContactResource(id, this.dao);
     }
 
     @POST

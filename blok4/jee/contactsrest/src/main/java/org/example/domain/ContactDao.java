@@ -5,7 +5,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +36,7 @@ public class ContactDao implements IContactDao {
     }
 
     public Optional<Contact> getById(Long id) {
-        return Optional.of(em.find(Contact.class, id));
+        return Optional.ofNullable(em.find(Contact.class, id));
     }
 
     // @Transactional NIET deze!

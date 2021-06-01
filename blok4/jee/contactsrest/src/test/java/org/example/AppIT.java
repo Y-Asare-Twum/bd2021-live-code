@@ -41,7 +41,7 @@ public class AppIT {
                 // .addClass(App.class) // dont forget!    // OR selectively add classes
                 // .addClass(ContactsResource.class)
                 // .addClass(Contact.class)
-                .addAsWebInfResource("beans-test.xml", "beans.xml") // to activate CDI
+                .addAsWebInfResource("META-INF/beans-test.xml", "META-INF/beans.xml") // to activate CDI
                 .addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml") // for JPA
                 .addAsLibraries(pomDependency("org.apache.logging.log4j", "log4j-slf4j-impl"));
 

@@ -5,19 +5,19 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
 
-    <persistence-unit name="MySQL-hrm-test" transaction-type="JTA"> <!-- Java Transaction API -->
-        <!-- onderstaande kan uit: wordt automatisch geladen, omdat hibernate op classpath (in pom) staat. -->
-        <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+    <persistence-unit name="MySQL-hrm" transaction-type="JTA"> <!-- Java Transaction API -->
         <jta-data-source>jdbc/MySQL</jta-data-source>
-
-        <!--<validation-mode>AUTO</validation-mode>-->
         <properties>
             <!-- onderstaande kan uit: wordt automatisch geladen, omdat mysql op classpath (in pom) staat. -->
             <!-- <property name="javax.persistence.jdbc.driver" value="iets van h2"/> -->
             <!-- connection properties URL user password: now in server.xml  -->
+            <property name="eclipselink.logging.level" value="ALL"/>
+            <property name="eclipselink.logging.level.sql" value="ALL"/>
+            <property name="eclipselink.logging.level.cache" value="ALL"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.target-database" value="MySQL"/>
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
-            <property name="eclipselink." value="create-or-extend-tables"/>
-            <!-- h2 dialect nog specificeren? -->
+            <property name="eclipselink.deploy-on-startup" value="true"/>
         </properties>
     </persistence-unit>
 
