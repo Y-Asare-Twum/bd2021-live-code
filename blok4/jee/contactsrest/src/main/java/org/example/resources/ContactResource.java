@@ -14,8 +14,7 @@ import java.util.List;
 
 import static org.example.util.Response.badRequest;
 
-// @Vetoed
-// @Dependent
+// @Vetoed @Dependent // not needed when bean discovery mode = all
 public class ContactResource implements JsonResource {
 
     @Inject //             @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
