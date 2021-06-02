@@ -9,7 +9,8 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.List;
 
-@Path("/contacts") // @RequestScoped implicitly
+/* @RequestScoped */
+@Path("/contacts")
 public class ContactsResource implements JsonResource {
 
     @Inject //             @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
@@ -19,9 +20,11 @@ public class ContactsResource implements JsonResource {
     @Inject // new fashioned @EJB
     private IContactDao dao; // talk to an interface, not to an implementation
 
+    @Inject
+    private ContactResource contactResource;
+
     // uri: .../contacts
     //      .../contacts?name=Bram
-
     @GET
     public List<Contact> get(@QueryParam("q") String q) {
         if (q == null) {
@@ -33,18 +36,17 @@ public class ContactsResource implements JsonResource {
         return this.dao.get(q);
     }
 
-    // ...../contacts/1
-
-    @Path("{id}")
-    public ContactResource getById(@PathParam("id") Long id) {
-        return new ContactResource(id, this.dao);
-    }
-
     @POST
     public Contact post(Contact c) {
         return this.dao.add(c);
     }
 
+    // ...../contacts/1
+    // DON'T annotate Forward to subresource with http method like GET/POST/...!
+    @Path("{id}")
+    public ContactResource getById(@PathParam("id") Long id) {
+        return this.contactResource.init(id);
+    }
 
     /*@GET @Path("connected")
     public Response conn() {

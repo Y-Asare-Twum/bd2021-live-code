@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
+import static org.example.util.Response.throwBadRequest;
 
 // @ApplicationScoped // Managed CDI bean, dus geen super powers
 @Stateless //            Managed Enterprise Java Bean (EJB): hij krijgt super powers (zoals transaction capabilities).
@@ -26,6 +27,7 @@ public class ContactDao implements IContactDao {
 
     // BEHAVIOUR:
 
+    @Override
     public List<Contact> get(String q) {
         return q == null ?
                 em.createNamedQuery("Contact.findAll", Contact.class)
@@ -35,11 +37,12 @@ public class ContactDao implements IContactDao {
                         .getResultList();
     }
 
+    @Override
     public Optional<Contact> getById(Long id) {
         return Optional.ofNullable(em.find(Contact.class, id));
     }
 
-    // @Transactional NIET deze!
+    @Override
     @TransactionAttribute(REQUIRED)  // = default; whole annotation can be omitted when choosing REQUIRED.
     //                                  Deze methode wordt in een databasetransactie op de server uitgevoerd.
     //                                  Als er al een transactie loopt, gebruikt de server die, anders maakt hij een nieuwe transactie aan.
@@ -47,4 +50,11 @@ public class ContactDao implements IContactDao {
         em.persist(c);
         return c;
     }
+
+    @Override
+    @TransactionAttribute(REQUIRED)
+    public void delete(Long id) {
+        getById(id).ifPresentOrElse(em::remove, throwBadRequest(id));
+    }
+
 }

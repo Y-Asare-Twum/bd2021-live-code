@@ -41,4 +41,10 @@ public class ContactDaoMock implements IContactDao {
         this.contacts.add(c);
         return c;
     }
+
+    @Override
+    public void delete(Long id) {
+        getById(id).ifPresent(this.contacts::remove);
+    }
 }
+

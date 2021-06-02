@@ -9,4 +9,6 @@ public interface IContactDao {
     Optional<Contact> getById(Long id);
 
     Contact add(Contact c);
+
+    void delete(Long id);
 }

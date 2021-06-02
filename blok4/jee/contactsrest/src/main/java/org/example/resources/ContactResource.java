@@ -6,37 +6,40 @@ import org.example.domain.Job;
 import org.example.util.JsonResource;
 import org.slf4j.Logger;
 
-import javax.enterprise.inject.Vetoed;
 import javax.inject.Inject;
-import javax.ws.rs.BadRequestException;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import java.util.List;
 
-import static java.lang.String.format;
+import static org.example.util.Response.badRequest;
 
-@Vetoed
+// @Vetoed
+// @Dependent
 public class ContactResource implements JsonResource {
-
-    private Long id;
-
-    private IContactDao dao;
-
-    public ContactResource() { }
-
-    public ContactResource(Long id, IContactDao dao) {
-        this.id = id;
-        this.dao = dao;
-    }
 
     @Inject //             @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
     private Logger log; // WELD is DI container
 
+    @Inject
+    private IContactDao dao;
+
+    private Long id;
+
+    public ContactResource init(Long id) {
+        this.id = id;
+        return this;
+    }
+
     @GET
-    // @Produces(MediaType.APPLICATION_XML)
     public Contact get() {
         return this.dao.getById(id)
-                .orElseThrow(() -> new BadRequestException(format("Contact with id %s not found.", id)));
+                .orElseThrow(() -> badRequest(id));
+    }
+
+    @DELETE
+    public void delete() {
+        this.dao.delete(id);
     }
 
     @GET @Path("jobs")
