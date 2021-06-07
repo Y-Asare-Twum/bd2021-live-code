@@ -3,10 +3,11 @@ package org.example.java11.slides.h3;
 import org.example.java11.slides.h10.game.Robot;
 
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Person implements Comparable<Robot> { // superclass
 
-    private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     // public, protected, - (package private), private.
 
@@ -51,12 +52,12 @@ public class Person implements Comparable<Robot> { // superclass
     }
 
     public void haveBirthday() {
-        lock.lock();
+        lock.writeLock().lock();
         int temp = age;
         // Thread.yield(); // sta je beurt af
         temp = age + 1;
         age = temp;
-        lock.unlock();
+        lock.writeLock().unlock();
     }
 
     public void haveBirthday(int i) {
@@ -73,10 +74,14 @@ public class Person implements Comparable<Robot> { // superclass
         return this;
     }
 
-    @Override public String toString() {
-        return "Person{" +
+    @Override
+    public String toString() {
+        lock.readLock().lock();
+        final var s = "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+        lock.readLock().unlock();
+        return s;
     }
 }

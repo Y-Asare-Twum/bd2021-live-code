@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Job.findAll", query = "SELECT e FROM Job e"),
-        @NamedQuery(name = "Job.find", query = "SELECT e FROM Job e WHERE e.id=:id")
+        @NamedQuery(name = "Job.findByQ", query = "SELECT e FROM Job e WHERE e.title LIKE :q")
 })
 @XmlRootElement
 public class Job {

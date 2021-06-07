@@ -13,6 +13,6 @@ public final class Response {
     }
 
     public static BadRequestException badRequest(Long id) {
-        return new BadRequestException(format("Contact with id %s not found.", id));
+        return new BadRequestException(format("Object with id %s not found.", id));
     }
 }

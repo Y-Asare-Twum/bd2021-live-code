@@ -1,52 +1,57 @@
 package org.example.resources;
 
 import org.example.domain.Contact;
-import org.example.domain.IContactDao;
+import org.example.domain.IDao;
 import org.example.domain.Job;
+import org.example.util.ContactDAO;
+import org.example.util.JobDAO;
 import org.example.util.JsonResource;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import java.util.List;
 
 import static org.example.util.Response.badRequest;
 
-// @Vetoed @Dependent // not needed when bean discovery mode = all
+//  To make subresources work withOpenAPI, use mpOpenAPI >= 2.0 (and liberty >= 21)
 public class ContactResource implements JsonResource {
 
-    @Inject //             @EJB is de oude @Inject, EN het kan alleen EJBs injecten, dat zijn classes met super powers
-    private Logger log; // WELD is DI container
+    @Inject @ContactDAO
+    private IDao<Contact> contactDao;
 
-    @Inject
-    private IContactDao dao;
-
-    private Long id;
-
-    public ContactResource init(Long id) {
-        this.id = id;
-        return this;
-    }
+    @Inject @JobDAO
+    private IDao<Job> jobDao;
 
     @GET
-    public Contact get() {
-        return this.dao.getById(id)
+    public Contact get(@PathParam("id") Long id) {
+        // Optional<Contact> optionalContact = this.dao.getById(id);
+        // if(optionalContact.isPresent())
+        //     return optionalContact.get();
+        // else {
+        //     throw badRequest(id);
+        // }
+
+        // Or shorter:
+        return this.contactDao.getById(id)
                 .orElseThrow(() -> badRequest(id));
     }
 
     @DELETE
-    public void delete() {
-        this.dao.delete(id);
+    public void delete(@PathParam("id") Long id) {
+        this.contactDao.delete(id);
     }
 
     @GET @Path("jobs")
-    public List<Job> getLaptops() {
-        return List.of(
-                Job.builder().id(1L).title("Java programmer").build(),
-                Job.builder().id(2L).title("PHP programmer").build(),
-                Job.builder().id(3L).title("Dad").build()
-        );
+    public List<Job> getJobs() {
+        return jobDao.get(null);
     }
+
+    // @Inject
+    // public void setJobDao(JobDao jobDao) { this.jobDao = jobDao; }
+    //
+    // @Inject
+    // public void setContactDao(ContactDao contactDao) { this.contactDao = contactDao; }
 }

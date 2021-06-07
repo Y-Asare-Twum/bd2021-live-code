@@ -1,7 +1,5 @@
 package org.example.domain;
 
-// javax: java eXtension
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,15 +9,16 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-@Entity
+@Entity @Table
 @NamedQueries({
-        @NamedQuery(name = "Laptop.findAll", query = "SELECT e FROM Laptop e"),
-        @NamedQuery(name = "Laptop.find", query = "SELECT e FROM Laptop e WHERE e.id=:id")
+        @NamedQuery(name = "User.findAll", query = "SELECT c FROM User c"),
+        @NamedQuery(name = "User.findByQ", query = "SELECT c FROM User c WHERE c.username like :q")
 })
 @XmlRootElement
-public class Laptop {
+public class User {
 
     @Id @GeneratedValue
     private Long id;
-    private String brand;
+    private String username;
+    private String password;
 }

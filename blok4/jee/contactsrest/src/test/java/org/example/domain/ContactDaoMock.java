@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 // Stateful! I can include state in this class.
 @Alternative @ApplicationScoped // ≈ @Injectable
-public class ContactDaoMock implements IContactDao {
+public class ContactDaoMock implements IDao<Contact> {
 
     // STATE:
 

@@ -1,7 +1,10 @@
 package org.example.resources;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.example.domain.Contact;
-import org.example.domain.IContactDao;
+import org.example.domain.IDao;
+import org.example.util.ContactDAO;
 import org.example.util.JsonResource;
 import org.slf4j.Logger;
 
@@ -17,8 +20,8 @@ public class ContactsResource implements JsonResource {
     private Logger log; // WELD is DI container
     //                     bovenstaande regel is het zogenaamde injection point
 
-    @Inject // new fashioned @EJB
-    private IContactDao dao; // talk to an interface, not to an implementation
+    @Inject @ContactDAO// new fashioned @EJB
+    private IDao<Contact> dao; // talk to an interface, not to an implementation
 
     @Inject
     private ContactResource contactResource;
@@ -26,7 +29,11 @@ public class ContactsResource implements JsonResource {
     // uri: .../contacts
     //      .../contacts?name=Bram
     @GET
-    public List<Contact> get(@QueryParam("q") String q) {
+    @Operation(description = "Gets all contacts or filtered by q.")
+    // Add API documentation for mpOpenAPI, see https://openliberty.io/blog/2018/05/22/microprofile-openapi-intro.html
+    // and for a quick overview: https://github.com/eclipse/microprofile-open-api/blob/master/spec/src/main/asciidoc/microprofile-openapi-spec.adoc#quick-overview-of-annotations.
+    public List<Contact> get(@Parameter(description = "Search on firstname and/or surname")
+                             @QueryParam("q") String q) {
         if (q == null) {
             log.debug("Geen zoekparameter meegegeven, geef alle contacts terug.");
         } else {
@@ -45,7 +52,7 @@ public class ContactsResource implements JsonResource {
     // DON'T annotate Forward to subresource with http method like GET/POST/...!
     @Path("{id}")
     public ContactResource getById(@PathParam("id") Long id) {
-        return this.contactResource.init(id);
+        return this.contactResource;
     }
 
     /*@GET @Path("connected")

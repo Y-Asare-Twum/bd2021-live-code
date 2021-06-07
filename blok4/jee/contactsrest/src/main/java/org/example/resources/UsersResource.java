@@ -1,6 +1,6 @@
 package org.example.resources;
 
-import org.example.domain.Contact;
+import org.example.domain.User;
 import org.example.util.JsonResource;
 import org.slf4j.Logger;
 
@@ -12,19 +12,12 @@ import javax.ws.rs.Path;
 public class UsersResource implements JsonResource {
 
     @Inject
-    private Logger log; // WELD is DI container
-
-    // TODO:
-    // private final List<Contact> contacts = new ArrayList<>(List.of(
-    //         cb.name("Bram").age(41).id(1L).build(),
-    //         cb.name("Joop").age(23).id(2L).build(),
-    //         cb.name("Mieke").age(45).id(3L).build()
-    // ));
+    private Logger log;
 
     @POST
-    public Contact post(Contact c) {
+    public User post(User u) {
         // TODO
-        return c;
+        return u;
     }
 
 }

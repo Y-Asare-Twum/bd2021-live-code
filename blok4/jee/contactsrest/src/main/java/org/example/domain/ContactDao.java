@@ -1,8 +1,13 @@
 package org.example.domain;
 
+import org.example.util.ContactDAO;
+import org.slf4j.Logger;
+
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -17,13 +22,16 @@ import static org.example.util.Response.throwBadRequest;
 //                       Stateless: de container maakt bij elk request een nieuwe instance;
 //                       de class kan dus ook beter geen data-fields bevatten (dat heeft geen zin)!
 @TransactionManagement(CONTAINER) // = default; whole annotation can be omitted when choosing CONTAINER
-public class ContactDao implements IContactDao {
+@ContactDAO
+public class ContactDao implements IDao<Contact> {
 
     // STATE: doesn't make sense in Stateless EJB.
     // private String name;
 
     @PersistenceContext // Container managed EntityManager
     private EntityManager em;
+
+    @Inject Logger log;
 
     // BEHAVIOUR:
 
@@ -55,6 +63,12 @@ public class ContactDao implements IContactDao {
     @TransactionAttribute(REQUIRED)
     public void delete(Long id) {
         getById(id).ifPresentOrElse(em::remove, throwBadRequest(id));
+    }
+
+    @PreDestroy
+    public void cleanUp() {
+        log.debug("Bean is about to get destroyed. Cleaning up resources...");
+        // Cleaning up resources..
     }
 
 }
