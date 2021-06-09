@@ -7,6 +7,7 @@ import org.example.util.ContactDAO;
 import org.example.util.JobDAO;
 import org.example.util.JsonResource;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,6 +18,7 @@ import java.util.List;
 import static org.example.util.Response.badRequest;
 
 //  To make subresources work withOpenAPI, use mpOpenAPI >= 2.0 (and liberty >= 21)
+@Dependent
 public class ContactResource implements JsonResource {
 
     @Inject @ContactDAO

@@ -83,7 +83,7 @@
                         <!-- Liberty server to run test against -->
                         <groupId>io.openliberty</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>20.0.0.12</version>
+                        <version>21.0.0.5</version>
                         <type>zip</type>
                     </assemblyArtifact>
                     <configFile>src/test/resources/server.xml</configFile> <!-- Used to run Arquillian-->
