@@ -6,6 +6,7 @@ import javax.json.bind.JsonbBuilder;
 public class JsonBDemo {
 
     // see https://javaee.github.io/jsonb-spec/
+    //     https://javaee.github.io/jsonb-spec/users-guide.html
     //     https://openliberty.io/docs/21.0.0.6/json-p-b.html
 
     public static void main(String[] args) {
