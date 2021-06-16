@@ -15,12 +15,12 @@ public class Post {
 
     private String title;
 
-    // single valued enum
+    // One to One to enum
     @Enumerated // (EnumType.STRING) // EnumType is optional: string is not the most efficient way.
     // @Convert(converter = TagConverter.class) // OR use a converter INSTEAD of @Enumerated
     private Tag rootTag;
 
-    // collection valued enum
+    // One to many (or many to many)
     @ElementCollection
     // @Convert(converter = TagConverter.class) // AND use a converter TOGETHER WITH @ElementCollection
     @Singular

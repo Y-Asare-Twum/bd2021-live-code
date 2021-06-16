@@ -13,7 +13,6 @@ import static java.util.stream.Collectors.toList;
 public class ContactDaoMock implements IDao<Contact> {
 
     // STATE:
-
     private final Contact.ContactBuilder cb = Contact.builder();
 
     private final List<Contact> contacts = new ArrayList<>(List.of(
