@@ -16,6 +16,7 @@
     <modules>
         <module>helloworldrest</module>
         <module>contactsrest</module>
+        <module>jsonprocessing</module>
     </modules>
 
 </project>
