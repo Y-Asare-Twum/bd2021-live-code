@@ -19,8 +19,7 @@ import java.util.List;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.example.util.Util.pomDependency;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class) // 1
 public class AppIT {
@@ -65,7 +64,7 @@ public class AppIT {
 
         int before = contactsBeforePost.size();
 
-        Contact c = Contact.builder().id(ID).firstName(FIRST_NAME).age(42).build();
+        Contact c = Contact.builder().id(ID).firstName(FIRST_NAME).age(42).bogus("debris").build();
 
         String postedContact = httpClient
                 .target(contactsResourcePath)
@@ -74,6 +73,10 @@ public class AppIT {
 
         assertTrue(postedContact.contains("\"id\":" + ID));
         assertTrue(postedContact.contains("\"firstName\":\"" + FIRST_NAME + "\""));
+
+        // this property should be ignored in the json
+        assertFalse(postedContact.contains("bogus"));
+        assertFalse(postedContact.contains("debris"));
 
         List<Contact> contactsAfterPost = httpClient
                 .target(contactsResourcePath) // URI

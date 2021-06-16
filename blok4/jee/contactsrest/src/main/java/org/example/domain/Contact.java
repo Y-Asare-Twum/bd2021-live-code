@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,5 +35,9 @@ public class Contact {
 
     @ManyToOne(cascade = MERGE/*, fetch = LAZY*/) // On merge cascade
     private Job job; // FK
+
+    @Transient //      to ignore this field in the database
+    @JsonbTransient // to ignore this field in the json; requires dependency javax.json.bind:javax.json.bind-api
+    private String bogus;
 
 }
