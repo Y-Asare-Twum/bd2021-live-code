@@ -1,5 +1,6 @@
 package org.example.java11.slides.h13;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,6 +22,12 @@ public class Printer {
     public void printNumbers(List<Number> list) { // list is read and write
         list.add(1.0d); // allowed, since Double is a subtype of Number
         System.out.println(list);
+    }
+
+    // covariant, but dangerous,
+    public void printNumbers(Number[] array) { // list is read and write
+        array[0] = 1.0d; // allowed, since Double is a subtype of Number
+        System.out.println(Arrays.toString(array));
     }
 
     // Co and contravariant: -----------------------------------

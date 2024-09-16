@@ -170,3 +170,4 @@ nbdist/
 
 **/target/*
 **/logs/*
+**/tomcat*/*
